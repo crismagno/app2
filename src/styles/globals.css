@@ -1,0 +1,138 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #444;
+    color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --height-door: 220px;
+  --width-door: 140px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: .3rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0d6dfd52;
+  border-radius: 0.2rem !important;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0d6dfd9f;
+}
+
+
+.bg-primary-chat {
+  background-color: #0D6EFD !important;
+  color: #fff !important;
+}
+
+.bg-secondary-chat {
+  background-color: #798289 !important;
+  color: #FFF !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.drop-trash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-align: center;
+  margin-top: -17rem;
+  margin-left: 18rem;
+  background-color: rgba(0, 0, 0, 0.09);
+  padding: 20px;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 20rem;
+  color: #fdc50de9;
+  border: 1px dashed #fdc50de9;
+  transition: .5ms ease-in-out;
+  font-size: 2rem;
+}
+
+.drop-trash-hover {
+  border: 1.7px #fd810d dashed;
+  color: #fd810d;
+  font-size: 2.5rem;
+}
+
+.icon-remove-message {
+  /* font-size: 2rem; */
+}
+
+.message-bubble {
+  word-break: break-word;
+  font-size: .82rem;
+}
+
+.view-buttons-arrows {
+  position: absolute;
+  right: 20px;
+  margin-top: 310px;
+}
+
+.btn-top, .btn-down {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9da1a702;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 30px ;
+  font-size: 12px;
+}
+
+.btn-top:hover, 
+.btn-down:hover,
+.btn-top:focus, 
+.btn-down:focus 
+.btn-top:active, 
+.btn-down:active, 
+.btn-top:enabled, 
+.btn-down:enabled 
+{
+  background-color: #4a546382;
+} 
+
+.view-picker {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -380px;
+}
+
+.emoji-mart {
+  width: 100% !important;
+  height: 300px !important;
+  overflow-x: hidden;
+}
+

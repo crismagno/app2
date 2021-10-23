@@ -1,0 +1,58 @@
+.area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: var(--height-door);
+    width: var(--width-door);
+    margin: 5px;
+}
+
+.structure {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-grow: 1;
+    border: 5px solid brown;
+    border-bottom: none;
+    width: 90%;
+    background-color: #0005;
+}
+
+.door {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: chocolate;
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.doorNumber {
+    font-size: 3rem;
+}
+
+.doorFloor {
+    height: 7px;
+    width: 100%;
+    background-color: #ddd;
+}
+
+.doorHandler {
+    margin-top: 20px;
+    align-self: flex-start;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: brown;
+}
+
+.selected .doorNumber {
+    color: yellow;
+}
+
+.selected .doorHandler {
+    background-color: yellow;
+}
+
+.selected {
+    border-color: yellow;
+}

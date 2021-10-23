@@ -1,0 +1,28 @@
+version: "3"
+
+services: 
+  
+  app-next:
+    # image: node:latest
+    # build: .
+    # container_name: app-next
+    # working_dir: /app
+    # restart: always
+    # volumes: 
+    #   - ./app:/app
+    # command: bash ./script.sh
+    # ports: 
+    #   - 3000:3000
+    # expose: 
+    #   - 3000
+  # app-next:
+  #   build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-next
+    restart: always
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "3000:3000"
