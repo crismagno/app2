@@ -1,5 +1,6 @@
 import router from "next/router"
 import { useState } from "react";
+import { IconChatAlt } from "./../components/General/icons";
 
 export default function Login() {
 
@@ -27,8 +28,8 @@ export default function Login() {
                 d-flex flex-column  justify-content-center
                 w-100vw h-100vh
                 col-lg-6 col-md-8 col-sm-10 col-12`}>
-            <div className={`d-flex justify-content-center mb-2`}>
-            <i style={{fontSize: 80}} className={"fa fa-envelope shadow-sm"}></i>
+            <div className={`d-flex justify-content-center mb-3`}>
+                {IconChatAlt(40)}
             </div>
             <div className={"d-flex"}>
                 <div className="form-check mx-2">

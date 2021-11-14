@@ -1,4 +1,5 @@
 import { Animated } from "react-animated-css";
+import { IconChatAlt } from "../../General/icons";
 
 export interface IRenderMessagesProps {
     messages: any;
@@ -39,7 +40,8 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
           animationInDuration={400}
           isVisible={messages.length == 0}
         >
-          <i style={{ fontSize: 50 }} className={"fa fa-envelope shadow"}></i>
+          {/* <i style={{ fontSize: 50 }} className={"fa fa-envelope shadow"}></i> */}
+          {IconChatAlt(12)}
           <h6 className="text-center m-3 shadow">Nenhuma mensagem...</h6>
         </Animated>
       );

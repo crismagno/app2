@@ -1,3 +1,5 @@
+import { IconPlaneAlt, IconSmileAlt } from "../../General/icons";
+
 interface ChatTextareaProps {
   onKeypress: (event: any) => void;
   onChange: (event: any) => void;
@@ -23,13 +25,15 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = (
         className="btn btn-secondary mt-1 shadow-none h-100 mb-1 ml-1 px-4 mx-1"
         onClick={props.setIsVisiblePicker}
       >
-        <i className={"fa fa-surprise"}></i>
+        {/* <i className={"fa fa-surprise"}></i> */}
+        {IconSmileAlt(5)}
       </button>
       <button
         className="btn btn-primary mt-1 shadow-none h-100 mb-1 ml-1 px-4"
         onClick={props.sendMessageInvoke}
       >
-        <i className={"fa fa-paper-plane"}></i>
+        {/* <i className={"fa fa-paper-plane"}></i> */}
+        {IconPlaneAlt(5)}
       </button>
     </div>
   );
