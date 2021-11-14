@@ -13,6 +13,13 @@ import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
 import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
 import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
 import { IMessage, ChatRenderMessages } from "../../components/Chat/RenderMessages";
+import { IWormBoxProps, WormBox } from "../../components/General/WormBox";
+
+interface IWormState {
+  text: string;
+  show: boolean;
+  colorChoose: IWormBoxProps["colorChoose"];
+}
 
 const colorGenerate = generateColor();
 
@@ -22,6 +29,11 @@ export default function Chat() {
   const [hubConnectionChat, setHubConnectionChat] = useState<
     HubConnection | any
   >();
+  const [wormState, setWormState] = useState<IWormState>({
+    colorChoose: "white",
+    show: false,
+    text: ""
+  });
   const [userId, setUserId] = useState<string>(`social_${generateRandom()}`);
   const [userName, setUserName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -41,14 +53,14 @@ export default function Chat() {
   useEffect(() => {
     if (router.query.id) {
       connection = new HubConnectionBuilder()
-        .withUrl(`https://localhost:5001/chathub`)
+        .withUrl(`${process.env.NEXT_PUBLIC_URL_SIGNALR}chathub`)
         .configureLogging(LogLevel.Information)
         .build();
 
       connection
         .start()
         .then((resp) => console.log("SignalR Connected", resp))
-        .catch((error) => console.log("SignalR Fail", error));
+        .catch((error) => wormBoxAction("SignalR Fail" + error, "danger"));
 
       setHubConnectionChat(connection);
       setUserName(String(router?.query?.userName));
@@ -57,7 +69,7 @@ export default function Chat() {
         connection
           ?.start()
           .then((resp) => console.log("SignalR Connected Start", resp))
-          .catch((error) => console.log("SignalR Fail Start", error));
+          .catch((error) => wormBoxAction("SignalR Fail Start" + error, "danger"));
         setHubConnectionChat(connection);
       });
 
@@ -78,7 +90,7 @@ export default function Chat() {
   const sendMessageInvoke = async () => {
     try {
       if (!message?.trim()) {
-        return alert("Mensagem vazia...");
+        return wormBoxAction("Mensagem vazia...");
       }
       if (hubConnectionChat?.connectionState !== "Disconnected") {
         const objMessage: IMessage = {
@@ -94,10 +106,10 @@ export default function Chat() {
         setMessage("");
         setIsVisiblePicker(false);
       } else {
-        alert(hubConnectionChat?.connectionState);
+        wormBoxAction(String(hubConnectionChat?.connectionState), "warning");
       }
     } catch (error) {
-      alert(error);
+      wormBoxAction(String(error), "danger");
     }
   };
 
@@ -107,15 +119,15 @@ export default function Chat() {
   const removeMessageInvoke = async (messageElement: IMessage) => {
     try {
       if (!messageElement.id) {
-        return alert("Mensagem nao valida...");
+        return wormBoxAction("Mensagem nao valida...");
       }
       if (hubConnectionChat?.connectionState !== "Disconnected") {
         await hubConnectionChat?.invoke("RemoveMessage", messageElement);
       } else {
-        alert(hubConnectionChat?.connectionState);
+        wormBoxAction(String(hubConnectionChat?.connectionState), "warning");
       }
     } catch (error) {
-      alert(error);
+      wormBoxAction(error, "danger");
     }
   };
 
@@ -185,6 +197,22 @@ export default function Chat() {
     setMessage((text) => `${text}${emoji.native}`);
   };
 
+  const wormBoxAction = (text: string, colorChoose: IWormBoxProps["colorChoose"] = "white", duration: number = 1000): void => {
+    setWormState({
+      show: true,
+      text,
+      colorChoose
+    });
+
+    setTimeout(() => {
+      setWormState({
+        text: "",
+        show: false,
+        colorChoose
+      })
+    }, duration); 
+  }
+
   if (
     Object.keys(router?.query).indexOf("userName") == -1 ||
     !router?.query?.userName ||
@@ -194,74 +222,83 @@ export default function Chat() {
   }
 
   return (
-    <div className="container d-flex flex-column justify-content-center align-items-center">
-      <ChatHeader />
+    <>
+      <WormBox
+        text={wormState.text}
+        colorChoose={wormState.colorChoose}
+        show={wormState.show}
+        className="fixed top-3 right-3"
+        animation="slideInUp"
+      />
+      <div className="container d-flex flex-column justify-content-center align-items-center">
+        <ChatHeader />
 
-      <div
-        className="
-        position-relative
-        d-flex flex-column justify-content-center 
-        col-lg-8 col-md-8 col-sm-10 col-12"
-        style={{ height: "100vh" }}
-      >
-        {/* top chat */}
-        <ChatTop
-          userName={userName}
-          userId={userId}
-          btnClickTrash={() => setMessages([])}
-          btnTrashOnMouseEnter={() => setHoverRemoveAllMessages(true)}
-          btnTrashOnMouseLeave={() => setHoverRemoveAllMessages(false)}
-          hoverRemoveAllMessages={hoverRemoveAllMessages}
-          messagesLength={messages.length}
-          colorUserName={colorGenerate}
-        />
-
-        {/*  div messages */}
-        <ChatContentMessages
-          onScrollChatMessages={onScrollChatMessages}
-          chatMessagesRef={chatMessagesRef}
+        <div
+          className="
+          position-relative
+          d-flex flex-column justify-content-center 
+          col-lg-8 col-md-8 col-sm-10 col-12"
+          style={{ height: "100vh" }}
         >
-          <ChatRenderMessages 
-            messages={messages}
-            message={message}
+          {/* top chat */}
+          <ChatTop
+            userName={userName}
             userId={userId}
-            setMessage={setMessage}
-            onDragStartHandler={onDragStartHandler}
-            onDragEndHandler={onDragEndHandler}
+            btnClickTrash={() => setMessages([])}
+            btnTrashOnMouseEnter={() => setHoverRemoveAllMessages(true)}
+            btnTrashOnMouseLeave={() => setHoverRemoveAllMessages(false)}
+            hoverRemoveAllMessages={hoverRemoveAllMessages}
+            messagesLength={messages.length}
+            colorUserName={colorGenerate}
           />
-        </ChatContentMessages>
 
-        {/* div remove */}
-        <ChatRemoveMessage
-          isDragMessage={isDragMessage}
-          isDragOverRemove={isDragOverRemove}
-          onDropHandler={onDropHandler}
-          onDragOverHandler={onDragOverHandler}
-          onDragDropLeaveHandler={onDragDropLeaveHandler}
-        />
+          {/*  div messages */}
+          <ChatContentMessages
+            onScrollChatMessages={onScrollChatMessages}
+            chatMessagesRef={chatMessagesRef}
+          >
+            <ChatRenderMessages 
+              messages={messages}
+              message={message}
+              userId={userId}
+              setMessage={setMessage}
+              onDragStartHandler={onDragStartHandler}
+              onDragEndHandler={onDragEndHandler}
+            />
+          </ChatContentMessages>
 
-        {/* buttons top down */}
-        <ChatButtonsTopDown
-          positionScrollChatMessages={positionScrollChatMessages}
-          scrollToTop={scrollToTop}
-          scrollToDown={scrollToDown}
-        />
+          {/* div remove */}
+          <ChatRemoveMessage
+            isDragMessage={isDragMessage}
+            isDragOverRemove={isDragOverRemove}
+            onDropHandler={onDropHandler}
+            onDragOverHandler={onDragOverHandler}
+            onDragDropLeaveHandler={onDragDropLeaveHandler}
+          />
 
-        {/* div textarea */}
-        <ChatTextarea
-          onChange={(event) => setMessage(event.target.value)}
-          onKeypress={onKeypress}
-          sendMessageInvoke={sendMessageInvoke}
-          setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
-          value={message}
-        />
+          {/* buttons top down */}
+          <ChatButtonsTopDown
+            positionScrollChatMessages={positionScrollChatMessages}
+            scrollToTop={scrollToTop}
+            scrollToDown={scrollToDown}
+          />
 
-        {/* picker */}
-        <ChatEmojiPicker
-          isVisiblePicker={isVisiblePicker}
-          pickerOnClick={pickerOnClick}
-        />
+          {/* div textarea */}
+          <ChatTextarea
+            onChange={(event) => setMessage(event.target.value)}
+            onKeypress={onKeypress}
+            sendMessageInvoke={sendMessageInvoke}
+            setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
+            value={message}
+          />
+
+          {/* picker */}
+          <ChatEmojiPicker
+            isVisiblePicker={isVisiblePicker}
+            pickerOnClick={pickerOnClick}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
