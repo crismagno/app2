@@ -1,7 +1,7 @@
+//  PARA RODAR O BACKEND TEM UQE CHAMAR ALGUMA ROTA DA API !!!!!!!!!!!!!!!!!
 import { useEffect, useRef, useState } from "react";
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { useRouter } from "next/router";
-import { Animated } from "react-animated-css";
 import { generateColor, generateRandom } from "./../../functions/helpers";
 
 import ChatTop from "./../../components/Chat/Top";
@@ -12,16 +12,7 @@ import ChatTextarea from "./../../components/Chat/Textarea";
 import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
 import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
 import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
-
-interface IMessage {
-  id: string | number;
-  userName: string;
-  userId: string;
-  chatId: string | number | any;
-  message: string;
-  createdAt: Date | string;
-  colorGenerate: string;
-}
+import { IMessage, ChatRenderMessages } from "../../components/Chat/RenderMessages";
 
 const colorGenerate = generateColor();
 
@@ -133,89 +124,6 @@ export default function Chat() {
       messages.filter((messageFilter) => messageFilter.id !== id)
     );
 
-  const renderMessages = () => {
-    if (messages.length === 0) {
-      return (
-        <Animated
-          className={
-            "d-flex flex-column justify-content-center align-items-center w-100 h-100 "
-          }
-          animationIn={"shake"}
-          animationOut="fadeOut"
-          animationInDelay={100}
-          animationInDuration={400}
-          isVisible={messages.length == 0}
-        >
-          <i style={{ fontSize: 50 }} className={"fa fa-envelope shadow"}></i>
-          <h6 className="text-center m-3 shadow">Nenhuma mensagem...</h6>
-        </Animated>
-      );
-    }
-
-    return messages.map((messageElement: IMessage, index: number): JSX.Element => {
-      return (
-        <div key={`message-element-${index}`}>
-          <Animated
-            className={`d-flex flex-column ${
-              (messageElement.userId === userId && "align-items-end") ||
-              "align-items-start"
-            }`}
-            animationIn={
-              messageElement.userId === userId ? "slideInRight" : "slideInLeft"
-            }
-            animationOut="fadeOut"
-            animationOutDelay={100}
-            animationInDuration={300}
-            isVisible={true}
-          >
-            {messageElement.userId !== userId && (
-              <div
-                style={{
-                  fontSize: 12,
-                  color: messageElement?.colorGenerate || "#FFF",
-                }}
-                className={"truncate"}
-              >
-                {messageElement.userName}
-              </div>
-            )}
-            <div
-              draggable={messageElement.userId === userId}
-              onDragStart={(event) =>
-                messageElement.userId === userId &&
-                onDragStartHandler(event, messageElement)
-              }
-              onDragEnd={(event) =>
-                messageElement.userId === userId && onDragEndHandler(event)
-              }
-              onDoubleClick={() =>
-                setMessage(`${message}${messageElement.message}`)
-              }
-              className={`
-                message-bubble
-                d-flex flex-column
-                cursor-pointer
-                mb-1 rounded-1 py-1 px-2 
-                shadow
-                ${
-                  messageElement.userId === userId
-                    ? "bg-primary-chat float-end"
-                    : "bg-secondary-chat float-start"
-                }
-              `}
-              style={{ maxWidth: "80%" }}
-            >
-              <div className={""}>{messageElement.message}</div>
-              <span style={{ fontSize: 9 }} className={""}>
-                {new Date(messageElement.createdAt).toLocaleString()}
-              </span>
-            </div>
-          </Animated>
-        </div>
-      );
-    });
-  };
-
   // part de eventos dos components=======================
   const scrollToDown = () => {
     chatMessagesRef?.current.scroll(
@@ -313,7 +221,14 @@ export default function Chat() {
           onScrollChatMessages={onScrollChatMessages}
           chatMessagesRef={chatMessagesRef}
         >
-          {renderMessages()}
+          <ChatRenderMessages 
+            messages={messages}
+            message={message}
+            userId={userId}
+            setMessage={setMessage}
+            onDragStartHandler={onDragStartHandler}
+            onDragEndHandler={onDragEndHandler}
+          />
         </ChatContentMessages>
 
         {/* div remove */}
