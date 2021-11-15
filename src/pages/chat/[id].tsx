@@ -12,7 +12,8 @@ import {
   ChatRenderMessages,
 } from "../../components/Chat/RenderMessages";
 import { WormBox } from "../../components/General/WormBox";
-import { UseChatFunctions } from "../../components/Chat/functions/useChatFuncitons";
+// import { UseChatFunctions } from "../../components/Chat/functions/useChatFuncitons";
+import { UseChatFuncitonsSocketIO } from "../../components/Chat/functions/useChatFuncitonsSocketIO";
 
 export default function Chat() {
 
@@ -46,7 +47,7 @@ export default function Chat() {
     onKeypress,
     onScrollChatMessages,
     pickerOnClick
-  } = UseChatFunctions({router});
+  } = UseChatFuncitonsSocketIO({router});
   
   if (
     Object.keys(router?.query).indexOf("userName") == -1 ||
