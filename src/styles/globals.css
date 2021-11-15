@@ -9,8 +9,17 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: #444;
-    color: #fff;
+  background: #1f2937; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #1f2937 0%, #151D2C 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#1f2937), color-stop(100%,#151D2C)); /* Chrome,Safari4+ */ 
+  background: -webkit-linear-gradient(-45deg,  #1f2937 0%,#151D2C 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #1f2937 0%,#151D2C 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #1f2937 0%,#151D2C 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #1f2937 0%,#151D2C 100%); /* W3C */ 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2937', endColorstr='#151D2C',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background-attachment: fixed;
+  color: #FFF;
+
 }
 
 a {
@@ -99,7 +108,7 @@ a {
 .view-buttons-arrows {
   position: absolute;
   right: 20px;
-  margin-top: 310px;
+  margin-top: 280px;
 }
 
 .btn-top, .btn-down {

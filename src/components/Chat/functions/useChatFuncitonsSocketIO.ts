@@ -36,7 +36,7 @@ export const UseChatFuncitonsSocketIO = ({
     
     useEffect(() => {
       if (router.query.id) {
-        socket = io(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
+        socket = io("http://localhost:3005", {
           transports: ['websocket'],
           forceNew: true,
           reconnectionDelay: 1000,
@@ -53,7 +53,7 @@ export const UseChatFuncitonsSocketIO = ({
       }
     }, [router.query.id]);
 
-    // listen all socket on
+    // listening all socket on
     const socketOn = (socket) => {
       socket?.on("connect", () => {
         wormBoxAction("Connected server", "success");

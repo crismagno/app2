@@ -66,14 +66,18 @@ export default function Chat() {
         className="fixed top-3 right-3"
         animation="slideInUp"
       />
-      <div className="container d-flex flex-column justify-content-center align-items-center">
+      <div className="
+          container 
+          d-flex flex-column justify-content-center align-items-center 
+        ">
         <ChatHeader />
 
         <div
           className="
-          position-relative
-          d-flex flex-column justify-content-center 
-          col-lg-8 col-md-8 col-sm-10 col-12"
+            position-relative
+            d-flex flex-column justify-content-center 
+            col-lg-8 col-md-8 col-sm-10 col-12
+          "
           style={{ height: "100vh" }}
         >
           {/* top chat */}

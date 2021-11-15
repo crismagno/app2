@@ -11,6 +11,12 @@ interface ChatTextareaProps {
 export const ChatTextarea: React.FC<ChatTextareaProps> = (
   props
 ): JSX.Element => {
+  const colorBtnPicker = `bg-gradient-to-tr from-gray-500 to-gray-600
+    hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
+
+  const colorBtnSend = `bg-gradient-to-tr from-blue-500 to-blue-600
+    hover:bg-gradient-to-tr hover:from-blue-600 hover:to-blue-700`;
+
   return (
     <div className={"d-flex flex-row align-items-center"}>
       <textarea
@@ -22,13 +28,13 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = (
         placeholder={`Mensagem...`}
       />
       <button
-        className="btn btn-secondary mt-1 shadow-none h-100 mb-1 ml-1 px-4 mx-1"
+        className={`btn ${colorBtnPicker} text-white mt-1 shadow-none h-100 mb-1 ml-1 px-4 mx-1`}
         onClick={props.setIsVisiblePicker}
       >
         {IconSmileAlt(5)}
       </button>
       <button
-        className="btn btn-primary mt-1 shadow-none h-100 mb-1 ml-0 px-4"
+        className={`btn ${colorBtnSend} text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4`}
         onClick={props.sendMessageInvoke}
       >
         {IconPlaneAlt(5)}
