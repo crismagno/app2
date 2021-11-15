@@ -42,7 +42,7 @@ export const UseChatFuncitonsSocketIO = ({
           reconnectionDelay: 1000,
           reconnectionDelayMax: 10000,
           reconnection: true,
-          multiplex: false
+          multiplex: false,
         });
 
         setUserName(String(router?.query?.userName));

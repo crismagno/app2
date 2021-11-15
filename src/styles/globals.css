@@ -77,17 +77,17 @@ a {
   align-items: center;
   position: absolute;
   text-align: center;
-  margin-top: -17rem;
-  margin-left: 18rem;
   background-color: rgba(0, 0, 0, 0.09);
   padding: 20px;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 20rem;
+  width: 35%;
+  height: calc(100vw/13);
+  border-radius: 2rem;
   color: #fdc50de9;
   border: 1px dashed #fdc50de9;
   transition: .5ms ease-in-out;
-  font-size: 2rem;
+  font-size: calc(100vw/33) !important;
+  bottom: 8.5rem;
+  left: calc(100vw/5.5) !important;
 }
 
 .drop-trash-hover {

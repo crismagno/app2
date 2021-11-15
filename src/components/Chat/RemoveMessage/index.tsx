@@ -22,7 +22,7 @@ export const ChatRemoveMessage: React.FC<ChatRemoveMessageProps> = (props) => {
             onDrop={props.onDropHandler}
             onDragOver={props.onDragOverHandler}
             onDragLeave={props.onDragDropLeaveHandler}
-            className={` drop-trash ${props.isDragOverRemove && "drop-trash-hover" || ""}`}>
+            className={`drop-trash ${props.isDragOverRemove && "drop-trash-hover" || ""}`}>
             <i className={"fa fa-trash-alt icon-remove-message"}></i>
           </div>
         </Animated>
