@@ -8,15 +8,11 @@ import ChatTextarea from "./../../components/Chat/Textarea";
 import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
 import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
 import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
-import {
-  ChatRenderMessages,
-} from "../../components/Chat/RenderMessages";
+import { ChatRenderMessages } from "../../components/Chat/RenderMessages";
 import { WormBox } from "../../components/General/WormBox";
-// import { UseChatFunctions } from "../../components/Chat/functions/useChatFuncitons";
-import { UseChatFuncitonsSocketIO } from "../../components/Chat/functions/useChatFuncitonsSocketIO";
+import { useChatFuncitonsSocketIO } from "../../components/Chat/functions/useChatFuncitonsSocketIO";
 
 export default function Chat() {
-
   const router = useRouter();
 
   const {
@@ -46,9 +42,9 @@ export default function Chat() {
     onDragDropLeaveHandler,
     onKeypress,
     onScrollChatMessages,
-    pickerOnClick
-  } = UseChatFuncitonsSocketIO({router});
-  
+    pickerOnClick,
+  } = useChatFuncitonsSocketIO({ router });
+
   if (
     Object.keys(router?.query).indexOf("userName") == -1 ||
     !router?.query?.userName ||
@@ -66,10 +62,12 @@ export default function Chat() {
         className="fixed top-3 right-3"
         animation="slideInUp"
       />
-      <div className="
+      <div
+        className="
           container 
           d-flex flex-column justify-content-center align-items-center 
-        ">
+        "
+      >
         <ChatHeader />
 
         <div

@@ -11,7 +11,7 @@ import io, { Socket } from "socket.io-client";
 const colorGenerate: string = generateColor();
 let socket: Socket;
 
-export const UseChatFuncitonsSocketIO = ({
+export const useChatFuncitonsSocketIO = ({
     router
 }: IUseChatFunctions) => {
     const [wormState, setWormState] = useState<IWormState>({
