@@ -48,7 +48,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
       >
         {/* <i style={{ fontSize: 50 }} className={"fa fa-envelope shadow"}></i> */}
         {IconChatAlt(12)}
-        <h6 className="text-center m-3 shadow">Nenhuma mensagem...</h6>
+        <h6 className="text-center m-3 shadow">Empty messages...</h6>
       </Animated>
     );
   }

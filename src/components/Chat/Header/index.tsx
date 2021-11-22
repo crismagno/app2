@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
+import React from "react";
 
-export const ChatHeader = (props) => {
+export const ChatHeader: React.FC = (): JSX.Element => {
   const router = useRouter();
   return (
     <div
@@ -8,7 +9,7 @@ export const ChatHeader = (props) => {
       className={"d-flex justify-content-end"}
       style={{ position: "absolute", top: 10, left: 10 }}
     >
-      <button className={"btn btn-outline-light "}>{"Voltar"}</button>
+      <button className={"btn btn-outline-light "}>{"Back"}</button>
     </div>
   );
 };

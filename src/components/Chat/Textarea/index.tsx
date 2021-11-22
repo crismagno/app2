@@ -8,9 +8,14 @@ interface ChatTextareaProps {
   value: string;
 }
 
-export const ChatTextarea: React.FC<ChatTextareaProps> = (
-  props
-): JSX.Element => {
+export const ChatTextarea: React.FC<ChatTextareaProps> = ({
+  onChange,
+  onKeypress,
+  sendMessageInvoke,
+  setIsVisiblePicker,
+  value,
+  children,
+}): JSX.Element => {
   const colorBtnPicker = `bg-gradient-to-tr from-gray-500 to-gray-600
     hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
 
@@ -20,22 +25,22 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = (
   return (
     <div className={"d-flex flex-row align-items-center"}>
       <textarea
-        onKeyPress={props.onKeypress}
+        onKeyPress={onKeypress}
         className="shadow-none form-control"
-        onChange={(event) => props.onChange(event)}
-        value={props.value}
+        onChange={(event) => onChange(event)}
+        value={value}
         style={{ resize: "none" }}
         placeholder={`Mensagem...`}
       />
       <button
         className={`btn ${colorBtnPicker} text-white mt-1 shadow-none h-100 mb-1 ml-1 px-4 mx-1`}
-        onClick={props.setIsVisiblePicker}
+        onClick={setIsVisiblePicker}
       >
         {IconSmileAlt(5)}
       </button>
       <button
         className={`btn ${colorBtnSend} text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4`}
-        onClick={props.sendMessageInvoke}
+        onClick={sendMessageInvoke}
       >
         {IconPlaneAlt(5)}
       </button>

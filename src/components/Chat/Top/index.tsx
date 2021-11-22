@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { generateColor } from "../../../functions/helpers";
 import { IconChatAlt, IconTrashAlt } from "../../General/icons";
 
 interface IChatTopProps {
@@ -13,7 +12,17 @@ interface IChatTopProps {
   colorUserName: string;
 }
 
-export const ChatTop: React.FC<IChatTopProps> = (props): JSX.Element => {
+export const ChatTop: React.FC<IChatTopProps> = ({
+  btnClickTrash,
+  btnTrashOnMouseEnter,
+  btnTrashOnMouseLeave,
+  colorUserName,
+  hoverRemoveAllMessages,
+  messagesLength,
+  userId,
+  userName,
+  children,
+}): JSX.Element => {
   return (
     <>
       {/* top chat */}
@@ -22,29 +31,29 @@ export const ChatTop: React.FC<IChatTopProps> = (props): JSX.Element => {
           Social
           <div className="d-flex flex-column  justify-content-start align-items-start">
             <span
-              style={{ fontSize: 13, color: props.colorUserName }}
+              style={{ fontSize: 13, color: colorUserName }}
               className={`mx-1`}
             >
-              <i>[ {props.userName} ]</i>
+              <i>[ {userName} ]</i>
             </span>
             <span style={{ fontSize: 12, color: "#0D6EFD" }} className={`mx-1`}>
-              (user ID: {props.userId} )
+              (user ID: {userId} )
             </span>
           </div>
         </h1>
         <div className={"d-flex justify-content-between align-items-center"}>
           <button
-            onMouseEnter={() => props?.btnTrashOnMouseEnter()}
-            onMouseLeave={() => props?.btnTrashOnMouseLeave()}
-            onClick={() => props?.btnClickTrash()}
+            onMouseEnter={() => btnTrashOnMouseEnter()}
+            onMouseLeave={() => btnTrashOnMouseLeave()}
+            onClick={() => btnClickTrash()}
             className={`border btn ${
-              (props.hoverRemoveAllMessages && "btn-outline-danger") ||
+              (hoverRemoveAllMessages && "btn-outline-danger") ||
               "btn-outline-light border-none"
             } d-flex align-items-center shadow`}
           >
-            {/* <i className={`fa ${props.hoverRemoveAllMessages && "fa-trash-alt" || "fa-comment-dots"} `}></i> */}
-            {props.hoverRemoveAllMessages ? IconTrashAlt(5) : IconChatAlt(5)}
-            <h6 className={"mx-2 p-0 m-0"}>{props.messagesLength}</h6>
+            {/* <i className={`fa ${hoverRemoveAllMessages && "fa-trash-alt" || "fa-comment-dots"} `}></i> */}
+            {hoverRemoveAllMessages ? IconTrashAlt(5) : IconChatAlt(5)}
+            <h6 className={"mx-2 p-0 m-0"}>{messagesLength}</h6>
           </button>
         </div>
       </div>

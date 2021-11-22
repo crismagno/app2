@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { memo } from "react";
 
-export const RedirectLogin: React.FC<any> = (props): JSX.Element => {
+export const RedirectLogin: React.FC<any> = (): JSX.Element => {
   return (
     <div
       style={{ height: "100vh" }}

@@ -8,11 +8,22 @@ interface IChatButtonsTopDownProps {
   show: boolean;
 }
 
-export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = (
-  props
-): JSX.Element => {
+export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = ({
+  positionScroll,
+  scrollToDown,
+  scrollToTop,
+  show,
+}): JSX.Element => {
   return (
-    <div className={`view-buttons-arrows`}>
+    <Animated
+      className={`view-buttons-arrows`}
+      animationIn={"slideInRight"}
+      animationOut="slideOutRight"
+      animationInDelay={100}
+      animationInDuration={300}
+      animationOutDuration={300}
+      isVisible={show}
+    >
       <Animated
         animationIn={"zoomIn"}
         animationOut="zoomOut"
@@ -20,13 +31,12 @@ export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = (
         animationInDuration={300}
         animationOutDuration={300}
         isVisible={
-          props.positionScroll?.clientHeight <
-            props.positionScroll?.scrollHeight &&
-          props.positionScroll?.scrollTop !== 0
+          positionScroll?.clientHeight < positionScroll?.scrollHeight &&
+          positionScroll?.scrollTop !== 0
         }
       >
         <button
-          onClick={props.scrollToTop}
+          onClick={scrollToTop}
           className={"btn btn-primary btn-top shadow-sm mb-1"}
         >
           <i className={"fa fa-arrow-up"}></i>
@@ -39,23 +49,21 @@ export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = (
         animationInDuration={300}
         animationOutDuration={300}
         isVisible={
-          props.positionScroll?.clientHeight <
-            props.positionScroll?.scrollHeight &&
+          positionScroll?.clientHeight < positionScroll?.scrollHeight &&
           !(
-            props.positionScroll?.scrollTop +
-              props.positionScroll?.clientHeight >=
-            props.positionScroll?.scrollHeight - 5
+            positionScroll?.scrollTop + positionScroll?.clientHeight >=
+            positionScroll?.scrollHeight - 5
           )
         }
       >
         <button
-          onClick={props.scrollToDown}
+          onClick={scrollToDown}
           className={"btn btn-primary btn-down shadow-sm"}
         >
           <i className={"fa fa-arrow-down"}></i>
         </button>
       </Animated>
-    </div>
+    </Animated>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { generateColor, generateRandom } from "../../../functions/helpers";
+import { useEffect, useRef, useState } from "react";
+import { generateColor, generateRandom } from "../../../utils/helpers";
 import { IMessage } from "../RenderMessages";
 import { IWormBoxProps } from "../../General/WormBox";
 import { IUseChatFunctions, IWormState } from "./types";
