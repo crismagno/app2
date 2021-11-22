@@ -19,6 +19,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [userName, setUserName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Array<IMessage>>([]);
+  const [removedMessages, setRemovedMessages] = useState<Array<IMessage>>([]);
   const [isDragMessage, setIsDragMessage] = useState(false);
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
@@ -66,6 +67,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
 
     socket?.on("onRemoveMessage", (data: IMessage) => {
       if (data.chatId == router.query.id) {
+        addChatRemovedMessages(data);
         removeMessage(data.id);
       }
     });
@@ -97,8 +99,11 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     }
   };
 
-  const addChatMessages = (data: IMessage) =>
+  const addChatMessages = (data: IMessage): void =>
     setMessages((messages) => [...messages, data]);
+
+  const addChatRemovedMessages = (data: IMessage): void =>
+    setRemovedMessages((messages) => [...messages, data]);
 
   const removeMessageInvoke = async (messageElement: IMessage) => {
     try {
@@ -239,5 +244,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     pickerOnClick,
     isMouseEnterDivMain,
     setIsMouseEnterDivMain,
+    removedMessages,
+    setRemovedMessages,
   };
 };

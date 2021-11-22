@@ -1,4 +1,5 @@
 import { Animated } from "react-animated-css";
+import { IMessage } from "../RenderMessages";
 
 interface IChatRemoveMessageProps {
   isDragMessage: boolean;
@@ -6,30 +7,58 @@ interface IChatRemoveMessageProps {
   onDropHandler: (event: any) => void;
   onDragOverHandler: (event: any) => void;
   onDragDropLeaveHandler: (event: any) => void;
+  removedMessages: IMessage[];
 }
 
-export const ChatRemoveMessage: React.FC<IChatRemoveMessageProps> = (props) => {
+export const ChatRemoveMessage: React.FC<IChatRemoveMessageProps> = ({
+  isDragMessage,
+  isDragOverRemove,
+  onDragDropLeaveHandler,
+  onDragOverHandler,
+  onDropHandler,
+  removedMessages,
+}) => {
   return (
-    <Animated
-      animationIn={"zoomIn"}
-      animationOut={"zoomOut"}
-      animationInDelay={100}
-      animationInDuration={500}
-      animationOutDuration={500}
-      isVisible={props.isDragMessage}
-      // isVisible={true}
+    <div
+      className={`
+      position-relative 
+      d-flex flex-column justify-content-center 
+      col-lg-4 col-md-4 col-sm-2 col-12
+      border
+    `}
+      style={{ maxHeight: "41rem" }}
     >
-      <div
-        onDrop={props.onDropHandler}
-        onDragOver={props.onDragOverHandler}
-        onDragLeave={props.onDragDropLeaveHandler}
-        className={`drop-trash ${
-          (props.isDragOverRemove && "drop-trash-hover") || ""
-        }`}
+      <Animated
+        animationIn={"zoomIn"}
+        animationOut={"zoomOut"}
+        animationInDelay={100}
+        animationInDuration={500}
+        animationOutDuration={500}
+        isVisible={isDragMessage}
       >
-        <i className={"fa fa-trash-alt icon-remove-message"}></i>
-      </div>
-    </Animated>
+        <div
+          onDrop={onDropHandler}
+          onDragOver={onDragOverHandler}
+          onDragLeave={onDragDropLeaveHandler}
+          className={`drop-trash ${
+            (isDragOverRemove && "drop-trash-hover") || ""
+          }`}
+        >
+          <i className={"fa fa-trash-alt icon-remove-message"}></i>
+        </div>
+      </Animated>
+      {removedMessages.length}
+      {!isDragOverRemove &&
+        removedMessages.map(
+          (message: IMessage, index: number): JSX.Element => (
+            <div key={`removed-message-${index}`}>
+              <div>
+                <span className={"text-white"}>{message.message}</span>
+              </div>
+            </div>
+          )
+        )}
+    </div>
   );
 };
 

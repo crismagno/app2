@@ -4,11 +4,7 @@ import React from "react";
 export const ChatHeader: React.FC = (): JSX.Element => {
   const router = useRouter();
   return (
-    <div
-      onClick={() => router?.back()}
-      className={"d-flex justify-content-end"}
-      style={{ position: "absolute", top: 10, left: 10 }}
-    >
+    <div onClick={() => router?.back()} className={"w-100 my-2 mx-0 px-2 "}>
       <button className={"btn btn-outline-light "}>{"Back"}</button>
     </div>
   );

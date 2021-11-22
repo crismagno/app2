@@ -44,6 +44,7 @@ export default function Chat() {
     pickerOnClick,
     isMouseEnterDivMain,
     setIsMouseEnterDivMain,
+    removedMessages,
   } = useChatFunctionsSocketIO({ router });
 
   if (
@@ -66,23 +67,20 @@ export default function Chat() {
       <div
         className="
           container 
-          d-flex flex-column justify-content-center align-items-center 
+          d-flex flex-column align-items-center 
         "
       >
         <ChatHeader />
-
         <div className="row col-12">
           {/* list messages removed of user */}
-          <div className="col-lg-4 col-md-4 col-sm-2 col-12">
-            {/* div remove */}
-            <ChatRemoveMessage
-              isDragMessage={isDragMessage}
-              isDragOverRemove={isDragOverRemove}
-              onDropHandler={onDropHandler}
-              onDragOverHandler={onDragOverHandler}
-              onDragDropLeaveHandler={onDragDropLeaveHandler}
-            />
-          </div>
+          <ChatRemoveMessage
+            isDragMessage={isDragMessage}
+            isDragOverRemove={isDragOverRemove}
+            onDropHandler={onDropHandler}
+            onDragOverHandler={onDragOverHandler}
+            onDragDropLeaveHandler={onDragDropLeaveHandler}
+            removedMessages={removedMessages}
+          />
           <div
             className="
             d-flex flex-column justify-content-center 
