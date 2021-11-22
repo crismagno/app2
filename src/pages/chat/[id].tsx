@@ -42,6 +42,8 @@ export default function Chat() {
     onKeypress,
     onScrollChatMessages,
     pickerOnClick,
+    isMouseEnterDivMain,
+    setIsMouseEnterDivMain,
   } = useChatFunctionsSocketIO({ router });
 
   if (
@@ -102,6 +104,8 @@ export default function Chat() {
 
             {/*  div messages */}
             <ChatContentMessages
+              onMouseOver={() => setIsMouseEnterDivMain(true)}
+              onMouseLeave={() => setIsMouseEnterDivMain(false)}
               onScrollChatMessages={onScrollChatMessages}
               chatMessagesRef={chatMessagesRef}
             >
@@ -117,7 +121,7 @@ export default function Chat() {
 
             {/* buttons top down */}
             <ChatButtonsTopDown
-              show
+              show={isMouseEnterDivMain}
               positionScroll={positionScrollChatMessages}
               scrollToTop={scrollToTop}
               scrollToDown={scrollToDown}

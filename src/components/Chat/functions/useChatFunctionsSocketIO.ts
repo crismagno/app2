@@ -23,6 +23,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
   const [hoverRemoveAllMessages, setHoverRemoveAllMessages] = useState(false);
+  const [isMouseEnterDivMain, setIsMouseEnterDivMain] = useState(false);
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
   const chatMessagesRef = useRef(null);
@@ -236,5 +237,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     onKeypress,
     onScrollChatMessages,
     pickerOnClick,
+    isMouseEnterDivMain,
+    setIsMouseEnterDivMain,
   };
 };

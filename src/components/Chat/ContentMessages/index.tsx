@@ -1,16 +1,22 @@
 interface IChatContentMessagesProps {
   onScrollChatMessages: (event: any) => void;
+  onMouseOver: (event: any) => void;
+  onMouseLeave: (event: any) => void;
   chatMessagesRef: any;
 }
 
 export const ChatContentMessages: React.FC<IChatContentMessagesProps> = ({
   onScrollChatMessages,
+  onMouseOver,
+  onMouseLeave,
   chatMessagesRef,
   children,
 }): JSX.Element => {
   return (
     <div
       onScroll={onScrollChatMessages}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
       ref={chatMessagesRef}
       id="chat-messages"
       className="
