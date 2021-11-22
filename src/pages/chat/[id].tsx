@@ -1,4 +1,3 @@
-//  PARA RODAR O BACKEND TEM UQE CHAMAR ALGUMA ROTA DA API !!!!!!!!!!!!!!!!!
 import { useRouter } from "next/router";
 import ChatTop from "./../../components/Chat/Top";
 import RedirectLogin from "./../../components/Chat/RedirectLogin";
@@ -8,15 +7,11 @@ import ChatTextarea from "./../../components/Chat/Textarea";
 import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
 import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
 import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
-import {
-  ChatRenderMessages,
-} from "../../components/Chat/RenderMessages";
+import { ChatRenderMessages } from "../../components/Chat/RenderMessages";
 import { WormBox } from "../../components/General/WormBox";
-// import { UseChatFunctions } from "../../components/Chat/functions/useChatFuncitons";
-import { UseChatFuncitonsSocketIO } from "../../components/Chat/functions/useChatFuncitonsSocketIO";
+import { useChatFunctionsSocketIO } from "../../components/Chat/functions/useChatFunctionsSocketIO";
 
 export default function Chat() {
-
   const router = useRouter();
 
   const {
@@ -46,9 +41,9 @@ export default function Chat() {
     onDragDropLeaveHandler,
     onKeypress,
     onScrollChatMessages,
-    pickerOnClick
-  } = UseChatFuncitonsSocketIO({router});
-  
+    pickerOnClick,
+  } = useChatFunctionsSocketIO({ router });
+
   if (
     Object.keys(router?.query).indexOf("userName") == -1 ||
     !router?.query?.userName ||
@@ -66,77 +61,83 @@ export default function Chat() {
         className="fixed top-3 right-3"
         animation="slideInUp"
       />
-      <div className="
+      <div
+        className="
           container 
           d-flex flex-column justify-content-center align-items-center 
-        ">
+        "
+      >
         <ChatHeader />
 
-        <div
-          className="
-            position-relative
+        <div className="row col-12">
+          {/* list messages removed of user */}
+          <div className="col-lg-4 col-md-4 col-sm-2 col-12">
+            {/* div remove */}
+            <ChatRemoveMessage
+              isDragMessage={isDragMessage}
+              isDragOverRemove={isDragOverRemove}
+              onDropHandler={onDropHandler}
+              onDragOverHandler={onDragOverHandler}
+              onDragDropLeaveHandler={onDragDropLeaveHandler}
+            />
+          </div>
+          <div
+            className="
             d-flex flex-column justify-content-center 
             col-lg-8 col-md-8 col-sm-10 col-12
           "
-          style={{ height: "100vh" }}
-        >
-          {/* top chat */}
-          <ChatTop
-            userName={userName}
-            userId={userId}
-            btnClickTrash={() => setMessages([])}
-            btnTrashOnMouseEnter={() => setHoverRemoveAllMessages(true)}
-            btnTrashOnMouseLeave={() => setHoverRemoveAllMessages(false)}
-            hoverRemoveAllMessages={hoverRemoveAllMessages}
-            messagesLength={messages.length}
-            colorUserName={colorGenerate}
-          />
-
-          {/*  div messages */}
-          <ChatContentMessages
-            onScrollChatMessages={onScrollChatMessages}
-            chatMessagesRef={chatMessagesRef}
+            style={{ height: "100vh", position: "relative" }}
           >
-            <ChatRenderMessages
-              messages={messages}
-              message={message}
+            {/* top chat */}
+            <ChatTop
+              userName={userName}
               userId={userId}
-              setMessage={setMessage}
-              onDragStartHandler={onDragStartHandler}
-              onDragEndHandler={onDragEndHandler}
+              btnClickTrash={() => setMessages([])}
+              btnTrashOnMouseEnter={() => setHoverRemoveAllMessages(true)}
+              btnTrashOnMouseLeave={() => setHoverRemoveAllMessages(false)}
+              hoverRemoveAllMessages={hoverRemoveAllMessages}
+              messagesLength={messages.length}
+              colorUserName={colorGenerate}
             />
-          </ChatContentMessages>
 
-          {/* div remove */}
-          <ChatRemoveMessage
-            isDragMessage={isDragMessage}
-            isDragOverRemove={isDragOverRemove}
-            onDropHandler={onDropHandler}
-            onDragOverHandler={onDragOverHandler}
-            onDragDropLeaveHandler={onDragDropLeaveHandler}
-          />
+            {/*  div messages */}
+            <ChatContentMessages
+              onScrollChatMessages={onScrollChatMessages}
+              chatMessagesRef={chatMessagesRef}
+            >
+              <ChatRenderMessages
+                messages={messages}
+                message={message}
+                userId={userId}
+                setMessage={setMessage}
+                onDragStartHandler={onDragStartHandler}
+                onDragEndHandler={onDragEndHandler}
+              />
+            </ChatContentMessages>
 
-          {/* buttons top down */}
-          <ChatButtonsTopDown
-            positionScrollChatMessages={positionScrollChatMessages}
-            scrollToTop={scrollToTop}
-            scrollToDown={scrollToDown}
-          />
+            {/* buttons top down */}
+            <ChatButtonsTopDown
+              show
+              positionScroll={positionScrollChatMessages}
+              scrollToTop={scrollToTop}
+              scrollToDown={scrollToDown}
+            />
 
-          {/* div textarea */}
-          <ChatTextarea
-            onChange={(event) => setMessage(event.target.value)}
-            onKeypress={onKeypress}
-            sendMessageInvoke={sendMessageInvoke}
-            setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
-            value={message}
-          />
+            {/* div textarea */}
+            <ChatTextarea
+              onChange={(event) => setMessage(event.target.value)}
+              onKeypress={onKeypress}
+              sendMessageInvoke={sendMessageInvoke}
+              setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
+              value={message}
+            />
 
-          {/* picker */}
-          <ChatEmojiPicker
-            isVisiblePicker={isVisiblePicker}
-            pickerOnClick={pickerOnClick}
-          />
+            {/* picker */}
+            <ChatEmojiPicker
+              isVisiblePicker={isVisiblePicker}
+              pickerOnClick={pickerOnClick}
+            />
+          </div>
         </div>
       </div>
     </>

@@ -1,14 +1,16 @@
 import { Animated } from "react-animated-css";
+import { IChatScrollPosition } from "../types";
 
-interface ChatButtonsTopDownProps {
-  positionScrollChatMessages?: any;
+interface IChatButtonsTopDownProps {
+  positionScroll: IChatScrollPosition;
   scrollToTop: (event: any) => void;
   scrollToDown: (event: any) => void;
+  show: boolean;
 }
 
-export const ChatButtonsTopDown: React.FC<ChatButtonsTopDownProps> = (
+export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = (
   props
-) => {
+): JSX.Element => {
   return (
     <div className={`view-buttons-arrows`}>
       <Animated
@@ -18,9 +20,9 @@ export const ChatButtonsTopDown: React.FC<ChatButtonsTopDownProps> = (
         animationInDuration={300}
         animationOutDuration={300}
         isVisible={
-          props.positionScrollChatMessages?.clientHeight <
-            props.positionScrollChatMessages?.scrollHeight &&
-          props.positionScrollChatMessages?.scrollTop !== 0
+          props.positionScroll?.clientHeight <
+            props.positionScroll?.scrollHeight &&
+          props.positionScroll?.scrollTop !== 0
         }
       >
         <button
@@ -37,12 +39,12 @@ export const ChatButtonsTopDown: React.FC<ChatButtonsTopDownProps> = (
         animationInDuration={300}
         animationOutDuration={300}
         isVisible={
-          props.positionScrollChatMessages?.clientHeight <
-            props.positionScrollChatMessages?.scrollHeight &&
+          props.positionScroll?.clientHeight <
+            props.positionScroll?.scrollHeight &&
           !(
-            props.positionScrollChatMessages?.scrollTop +
-              props.positionScrollChatMessages?.clientHeight ===
-            props.positionScrollChatMessages?.scrollHeight
+            props.positionScroll?.scrollTop +
+              props.positionScroll?.clientHeight >=
+            props.positionScroll?.scrollHeight - 5
           )
         }
       >
