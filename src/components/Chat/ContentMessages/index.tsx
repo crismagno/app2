@@ -1,7 +1,7 @@
 interface IChatContentMessagesProps {
   onScrollChatMessages: (event: any) => void;
-  onMouseOver: (event: any) => void;
-  onMouseLeave: (event: any) => void;
+  onMouseOver?: (event: any) => void;
+  onMouseLeave?: (event: any) => void;
   chatMessagesRef: any;
 }
 

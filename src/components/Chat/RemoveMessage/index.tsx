@@ -7,7 +7,6 @@ interface IChatRemoveMessageProps {
   onDropHandler: (event: any) => void;
   onDragOverHandler: (event: any) => void;
   onDragDropLeaveHandler: (event: any) => void;
-  removedMessages: IMessage[];
 }
 
 export const ChatRemoveMessage: React.FC<IChatRemoveMessageProps> = ({
@@ -16,7 +15,6 @@ export const ChatRemoveMessage: React.FC<IChatRemoveMessageProps> = ({
   onDragDropLeaveHandler,
   onDragOverHandler,
   onDropHandler,
-  removedMessages,
 }) => {
   return (
     <div
@@ -47,17 +45,6 @@ export const ChatRemoveMessage: React.FC<IChatRemoveMessageProps> = ({
           <i className={"fa fa-trash-alt icon-remove-message"}></i>
         </div>
       </Animated>
-      {removedMessages.length}
-      {!isDragOverRemove &&
-        removedMessages.map(
-          (message: IMessage, index: number): JSX.Element => (
-            <div key={`removed-message-${index}`}>
-              <div>
-                <span className={"text-white"}>{message.message}</span>
-              </div>
-            </div>
-          )
-        )}
     </div>
   );
 };

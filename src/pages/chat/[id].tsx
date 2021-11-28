@@ -73,14 +73,15 @@ export default function Chat() {
         <ChatHeader />
         <div className="row col-12">
           {/* list messages removed of user */}
-          <ChatRemoveMessage
+          {/* <ChatRemoveMessage
             isDragMessage={isDragMessage}
             isDragOverRemove={isDragOverRemove}
             onDropHandler={onDropHandler}
             onDragOverHandler={onDragOverHandler}
             onDragDropLeaveHandler={onDragDropLeaveHandler}
-            removedMessages={removedMessages}
-          />
+          /> */}
+          <div className={`col-4`}>test</div>
+
           <div
             className="
             d-flex flex-column justify-content-center 
@@ -102,8 +103,8 @@ export default function Chat() {
 
             {/*  div messages */}
             <ChatContentMessages
-              onMouseOver={() => setIsMouseEnterDivMain(true)}
-              onMouseLeave={() => setIsMouseEnterDivMain(false)}
+              // onMouseOver={() => setIsMouseEnterDivMain(true)}
+              // onMouseLeave={() => setIsMouseEnterDivMain(false)}
               onScrollChatMessages={onScrollChatMessages}
               chatMessagesRef={chatMessagesRef}
             >

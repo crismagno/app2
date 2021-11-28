@@ -3,11 +3,11 @@ import { generateColor, generateRandom } from "../../../utils/helpers";
 import { IMessage } from "../RenderMessages";
 import { IWormBoxProps } from "../../General/WormBox";
 import { IUseChatFunctions, IWormState } from "./types";
-import io, { Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import { IChatScrollPosition } from "../types";
+import { SocketChat } from "../../../utils/SocketChat.ts";
 
 const colorGenerate: string = generateColor();
-let socket: Socket;
 
 export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [wormState, setWormState] = useState<IWormState>({
@@ -24,32 +24,27 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
   const [hoverRemoveAllMessages, setHoverRemoveAllMessages] = useState(false);
-  const [isMouseEnterDivMain, setIsMouseEnterDivMain] = useState(false);
+  const [isMouseEnterDivMain, setIsMouseEnterDivMain] = useState(true);
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
   const chatMessagesRef = useRef(null);
+  const socketChat = new SocketChat();
 
   useEffect(() => {
     if (router.query.id) {
-      socket = io(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
-        transports: ["websocket"],
-        forceNew: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 10000,
-        reconnection: true,
-        multiplex: false,
-      });
-
       setUserName(String(router?.query?.userName));
-      socketOn(socket);
+      socketChat
+        .start()
+        .then(socketOn)
+        .catch((error) => wormBoxAction(error, "danger", 2000));
+      return () => {
+        socketChat.disconnect();
+      };
     }
-    return () => {
-      socket?.disconnect();
-    };
   }, [router.query.id]);
 
   // listening all socket on
-  const socketOn = (socket) => {
+  const socketOn = (socket: Socket) => {
     socket?.on("connect", () => {
       wormBoxAction("Connected...", "success");
     });
@@ -73,53 +68,49 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     });
   };
 
+  // send message to socket
   const sendMessageInvoke = async () => {
     try {
       if (!message?.trim()) {
         return wormBoxAction("Empty message!");
       }
-      if (socket?.connected) {
-        const objMessage: IMessage = {
-          id: generateRandom(),
-          userName,
-          userId,
-          chatId: router.query.id,
-          message,
-          createdAt: new Date().toISOString(),
-          colorGenerate,
-        };
-        socket.emit("emitNewMessage", objMessage);
-        setMessage("");
-        setIsVisiblePicker(false);
-      } else {
-        wormBoxAction("Connection error[1]", "warning");
-      }
+      socketChat.emitNewMessage({
+        id: generateRandom(),
+        userName,
+        userId,
+        chatId: router.query.id,
+        message,
+        createdAt: new Date().toISOString(),
+        colorGenerate,
+      });
+      setMessage("");
+      setIsVisiblePicker(false);
     } catch (error) {
-      wormBoxAction(String(error), "danger");
+      wormBoxAction(String(error), "warning");
     }
   };
 
+  // send message to remove to socket
+  const removeMessageInvoke = async (message: IMessage) => {
+    try {
+      if (!message.id) {
+        return wormBoxAction("Empty message!");
+      }
+      socketChat.emitNewMessage(message);
+    } catch (error) {
+      wormBoxAction(error, "warning");
+    }
+  };
+
+  // add message on component
   const addChatMessages = (data: IMessage): void =>
     setMessages((messages) => [...messages, data]);
 
+  // add message on messages removed by user component
   const addChatRemovedMessages = (data: IMessage): void =>
     setRemovedMessages((messages) => [...messages, data]);
 
-  const removeMessageInvoke = async (messageElement: IMessage) => {
-    try {
-      if (!messageElement.id) {
-        return wormBoxAction("Empty message!");
-      }
-      if (socket?.connected) {
-        socket?.emit("emitRemoveMessage", messageElement);
-      } else {
-        wormBoxAction("Connection error[2]", "warning");
-      }
-    } catch (error) {
-      wormBoxAction(error, "danger");
-    }
-  };
-
+  // remove message of messages of component
   const removeMessage = (id: IMessage["id"]) =>
     setMessages((messages) =>
       messages.filter((messageFilter) => messageFilter.id !== id)
@@ -209,7 +200,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   return {
     colorGenerate,
     router,
-    connectionChat: socket,
     wormState,
     userId,
     userName,
