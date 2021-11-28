@@ -34,7 +34,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     if (router.query.id) {
       setUserName(String(router?.query?.userName));
       socketChat
-        .start()
+        .start(String(router?.query?.userName), String(router.query.id))
         .then(socketOn)
         .catch((error) => wormBoxAction(error, "danger", 2000));
       return () => {

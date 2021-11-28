@@ -1,20 +1,38 @@
-import io, { Socket } from "socket.io-client";
+import io, { Socket, Manager } from "socket.io-client";
 import { IMessage } from "../../components/Chat/RenderMessages";
 
 export class SocketChat {
   private static socket: Socket = null;
 
-  constructor() {}
-
-  public async start(): Promise<Socket> | never {
+  public async start(username: string, room: string): Promise<Socket> | never {
     try {
-      SocketChat.socket = io(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
-        transports: ["websocket"],
+      const manager = new Manager(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
+        transports: ["websocket", "polling"],
         forceNew: true,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 10000,
         reconnection: true,
         multiplex: false,
+        query: {
+          username,
+          room,
+        },
+      });
+
+      SocketChat.socket = manager.socket(
+        process.env.NEXT_PUBLIC_MANAGER_SOCKET_IO_PATH
+      );
+
+      manager.open((err) => {
+        if (err) {
+          // an error has occurred
+          console.log("Socket an error has occurred");
+        } else {
+          // the connection was successfully established
+          console.log(
+            "Socket manager the connection was successfully established"
+          );
+        }
       });
 
       return SocketChat.socket;
