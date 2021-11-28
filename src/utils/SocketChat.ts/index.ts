@@ -1,13 +1,14 @@
 import io, { Socket } from "socket.io-client";
 import { IMessage } from "../../components/Chat/RenderMessages";
 
-let socket: Socket = null;
 export class SocketChat {
+  private static socket: Socket = null;
+
   constructor() {}
 
   public async start(): Promise<Socket> | never {
     try {
-      socket = io(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
+      SocketChat.socket = io(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
         transports: ["websocket"],
         forceNew: true,
         reconnectionDelay: 1000,
@@ -16,20 +17,20 @@ export class SocketChat {
         multiplex: false,
       });
 
-      return socket;
+      return SocketChat.socket;
     } catch (error) {
       throw error;
     }
   }
 
   public disconnect(): void {
-    socket?.disconnect();
+    SocketChat.socket?.disconnect();
   }
 
   public emitNewMessage(message: IMessage): void | never {
     try {
-      if (socket?.connected) {
-        socket?.emit("emitNewMessage", message);
+      if (SocketChat.socket?.connected) {
+        SocketChat.socket?.emit("emitNewMessage", message);
       } else {
         throw "Connection error[1]";
       }
@@ -40,8 +41,8 @@ export class SocketChat {
 
   public emitRemoveMessage(message: IMessage): void | never {
     try {
-      if (socket?.connected) {
-        socket?.emit("emitRemoveMessage", message);
+      if (SocketChat.socket?.connected) {
+        SocketChat.socket?.emit("emitRemoveMessage", message);
       } else {
         throw "Connection error[2]";
       }
