@@ -8,6 +8,7 @@ export interface IRenderMessagesProps {
   onDragStartHandler: (event, messageElement) => void;
   onDragEndHandler: (event) => void;
   setMessage: (string) => void;
+  removeMessage: (message: IMessage) => Promise<void>;
 }
 
 export interface IMessage {
@@ -27,12 +28,30 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   onDragStartHandler,
   onDragEndHandler,
   setMessage,
+  removeMessage,
 }): JSX.Element | any => {
   const colorSend = `bg-gradient-to-tr from-blue-600 to-blue-800
     hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
 
   const colorReceive = `bg-gradient-to-tr from-gray-500 to-gray-600
     hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
+
+  let start;
+  let end;
+  let delta;
+
+  const onMouseDown = (): void => {
+    start = new Date();
+  };
+
+  const onMouseUp = (message: IMessage) => {
+    end = new Date();
+    delta = (end - start) / 1000.0;
+
+    if (delta > 1.5) {
+      removeMessage(message);
+    }
+  };
 
   if (messages.length === 0) {
     return (
@@ -95,6 +114,8 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
               onDoubleClick={() =>
                 setMessage(`${message}${messageElement.message}`)
               }
+              onMouseDown={onMouseDown}
+              onMouseUp={() => onMouseUp(messageElement)}
               className={`
                 message-bubble
                 d-flex flex-column

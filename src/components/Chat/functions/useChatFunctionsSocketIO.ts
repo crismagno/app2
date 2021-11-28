@@ -91,12 +91,13 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   };
 
   // send message to remove to socket
-  const removeMessageInvoke = async (message: IMessage) => {
+  const removeMessageInvoke = async (message: IMessage): Promise<void> => {
     try {
       if (!message.id) {
-        return wormBoxAction("Empty message!");
+        wormBoxAction("Empty message!");
+        return;
       }
-      socketChat.emitNewMessage(message);
+      socketChat.emitRemoveMessage(message);
     } catch (error) {
       wormBoxAction(error, "warning");
     }

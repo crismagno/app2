@@ -45,6 +45,7 @@ export default function Chat() {
     isMouseEnterDivMain,
     setIsMouseEnterDivMain,
     removedMessages,
+    removeMessageInvoke,
   } = useChatFunctionsSocketIO({ router });
 
   if (
@@ -115,6 +116,7 @@ export default function Chat() {
                 setMessage={setMessage}
                 onDragStartHandler={onDragStartHandler}
                 onDragEndHandler={onDragEndHandler}
+                removeMessage={removeMessageInvoke}
               />
             </ChatContentMessages>
 
