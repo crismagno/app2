@@ -71,6 +71,10 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
       );
     });
 
+    socket?.on(`userConnected-${userId}`, (data: IUserRoom[]) =>
+      setUsersRoom(data)
+    );
+
     socket?.on(`onNewMessage-${room}`, (data: IMessage) => {
       addChatMessages(data);
       scrollToDown();
