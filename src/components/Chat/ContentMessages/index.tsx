@@ -20,6 +20,7 @@ export const ChatContentMessages: React.FC<IChatContentMessagesProps> = ({
       ref={chatMessagesRef}
       id="chat-messages"
       className="
+            flex-1
             d-flex flex-column 
             border-bottom border-top
             my-2 pt-2 pb-1 px-2

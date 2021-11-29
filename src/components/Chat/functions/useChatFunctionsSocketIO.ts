@@ -18,13 +18,14 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [userId, setUserId] = useState<string>(`social_${generateRandom()}`);
   const [userName, setUserName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<Array<IMessage>>([]);
-  const [removedMessages, setRemovedMessages] = useState<Array<IMessage>>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [removedMessages, setRemovedMessages] = useState<IMessage[]>([]);
   const [isDragMessage, setIsDragMessage] = useState(false);
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
   const [hoverRemoveAllMessages, setHoverRemoveAllMessages] = useState(false);
   const [isMouseEnterDivMain, setIsMouseEnterDivMain] = useState(true);
+  const [usersRoom, setUsersRoom] = useState<IUserRoom[]>([]);
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
   const chatMessagesRef = useRef(null);
@@ -54,11 +55,20 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     });
 
     socket?.on(`userConnected-${room}`, (data: IUserRoom) => {
-      console.log("user connected", data);
+      if (data.userId !== userId) {
+        setUsersRoom((usersRoom: IUserRoom[]): IUserRoom[] => [
+          ...usersRoom,
+          data,
+        ]);
+      }
     });
 
     socket?.on(`userDisconnected-${room}`, (data: IUserRoom) => {
-      console.log("user disconnected", data);
+      setUsersRoom((usersRoom: IUserRoom[]): IUserRoom[] =>
+        usersRoom.filter(
+          (userRoom: IUserRoom) => userRoom.userId !== data.userId
+        )
+      );
     });
 
     socket?.on(`onNewMessage-${room}`, (data: IMessage) => {
@@ -241,5 +251,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     setIsMouseEnterDivMain,
     removedMessages,
     setRemovedMessages,
+    usersRoom,
   };
 };

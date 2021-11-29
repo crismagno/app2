@@ -1,4 +1,4 @@
-import io, { Socket, Manager } from "socket.io-client";
+import { Socket, Manager } from "socket.io-client";
 import { IMessage } from "../../components/Chat/RenderMessages";
 
 export class SocketChat {

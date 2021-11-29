@@ -7,6 +7,7 @@ import ChatTextarea from "./../../components/Chat/Textarea";
 import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
 import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
 import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
+import { ListUsers } from "./../../components/Chat/ListUsers";
 import { ChatRenderMessages } from "../../components/Chat/RenderMessages";
 import { WormBox } from "../../components/General/WormBox";
 import { useChatFunctionsSocketIO } from "../../components/Chat/functions/useChatFunctionsSocketIO";
@@ -46,6 +47,7 @@ export default function Chat() {
     setIsMouseEnterDivMain,
     removedMessages,
     removeMessageInvoke,
+    usersRoom,
   } = useChatFunctionsSocketIO({ router });
 
   if (
@@ -81,14 +83,13 @@ export default function Chat() {
             onDragOverHandler={onDragOverHandler}
             onDragDropLeaveHandler={onDragDropLeaveHandler}
           /> */}
-          <div className={`col-4`}>test</div>
-
+          <ListUsers usersRoom={usersRoom} />
           <div
             className="
             d-flex flex-column justify-content-center 
             col-lg-8 col-md-8 col-sm-10 col-12
           "
-            style={{ height: "100vh", position: "relative" }}
+            style={{ height: "87vh", position: "relative" }}
           >
             {/* top chat */}
             <ChatTop
