@@ -8,6 +8,9 @@ interface IListUsersProps {
 export const ListUsers: React.FC<IListUsersProps> = ({
   usersRoom,
 }): JSX.Element => {
+  const avatarDefault =
+    "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+
   return (
     <div
       className={`
@@ -28,9 +31,7 @@ export const ListUsers: React.FC<IListUsersProps> = ({
           >
             {userRoom.avatar ? (
               <img
-                src={
-                  userRoom.avatar || "https://picsum.photos/200/300?random=2"
-                }
+                src={userRoom.avatar || avatarDefault}
                 alt={"avatar user"}
                 className={`border-2 rounded-full mr-1 shadow`}
                 style={{ width: 40, height: 40, borderColor: "#FFF6" }}
@@ -52,6 +53,7 @@ export const ListUsers: React.FC<IListUsersProps> = ({
 					`}
             >
               <span
+                style={{ color: userRoom.userColor }}
                 className={`text-sm`}
                 title={`User name: ${userRoom.username}`}
               >

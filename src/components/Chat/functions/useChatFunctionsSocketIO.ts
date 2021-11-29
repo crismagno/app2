@@ -30,12 +30,20 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     useState<IChatScrollPosition>(null);
   const chatMessagesRef = useRef(null);
   const socketChat = new SocketChat();
+  const avatar =
+    "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
 
   useEffect(() => {
     if (router.query.id) {
       setUserName(String(router?.query?.userName));
       socketChat
-        .start(userId, String(router?.query?.userName), String(router.query.id))
+        .start(
+          userId,
+          String(router?.query?.userName),
+          String(router.query.id),
+          avatar,
+          colorGenerate
+        )
         .then((socket) => socketOn(socket, String(router.query.id)))
         .catch((error) => wormBoxAction(error, "danger", 2000));
       return () => {

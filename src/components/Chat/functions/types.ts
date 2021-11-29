@@ -17,4 +17,5 @@ export interface IUserRoom {
   room: string;
   socketID: string;
   avatar?: string;
+  userColor?: string;
 }

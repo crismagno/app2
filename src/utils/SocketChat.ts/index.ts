@@ -7,7 +7,9 @@ export class SocketChat {
   public async start(
     userId: string,
     username: string,
-    room: string
+    room: string,
+    avatar: string,
+    userColor: string
   ): Promise<Socket> | never {
     try {
       const manager = new Manager(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
@@ -21,7 +23,8 @@ export class SocketChat {
           userId,
           username,
           room,
-          avatar: "",
+          avatar,
+          userColor,
         },
       });
 
