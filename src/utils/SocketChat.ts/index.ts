@@ -32,18 +32,6 @@ export class SocketChat {
         process.env.NEXT_PUBLIC_MANAGER_SOCKET_IO_PATH
       );
 
-      manager.open((err) => {
-        if (err) {
-          // an error has occurred
-          console.log("Socket an error has occurred");
-        } else {
-          // the connection was successfully established
-          console.log(
-            "Socket manager the connection was successfully established"
-          );
-        }
-      });
-
       return SocketChat.socket;
     } catch (error) {
       throw error;

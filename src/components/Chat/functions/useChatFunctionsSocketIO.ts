@@ -41,7 +41,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
           userId,
           String(router?.query?.userName),
           String(router.query.id),
-          avatar,
+          String(router?.query?.userAvatar || avatar),
           colorGenerate
         )
         .then((socket) => socketOn(socket, String(router.query.id)))

@@ -32,9 +32,14 @@ export const ListUsers: React.FC<IListUsersProps> = ({
             {userRoom.avatar ? (
               <img
                 src={userRoom.avatar || avatarDefault}
-                alt={"avatar user"}
-                className={`border-2 rounded-full mr-1 shadow`}
-                style={{ width: 40, height: 40, borderColor: "#FFF6" }}
+                alt={"user avatar"}
+                className={`border-1 rounded-full mr-1 shadow`}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderColor: "#FFF5",
+                  objectFit: "cover",
+                }}
               />
             ) : (
               <div
