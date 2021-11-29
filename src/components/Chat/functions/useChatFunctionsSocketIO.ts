@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { generateColor, generateRandom } from "../../../utils/helpers";
 import { IMessage } from "../RenderMessages";
 import { IWormBoxProps } from "../../General/WormBox";
-import { IUseChatFunctions, IWormState } from "./types";
+import { IUseChatFunctions, IUserRoom, IWormState } from "./types";
 import { Socket } from "socket.io-client";
 import { IChatScrollPosition } from "../types";
 import { SocketChat } from "../../../utils/SocketChat.ts";
@@ -34,8 +34,8 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     if (router.query.id) {
       setUserName(String(router?.query?.userName));
       socketChat
-        .start(String(router?.query?.userName), String(router.query.id))
-        .then(socketOn)
+        .start(userId, String(router?.query?.userName), String(router.query.id))
+        .then((socket) => socketOn(socket, String(router.query.id)))
         .catch((error) => wormBoxAction(error, "danger", 2000));
       return () => {
         socketChat.disconnect();
@@ -44,7 +44,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   }, [router.query.id]);
 
   // listening all socket on
-  const socketOn = (socket: Socket) => {
+  const socketOn = (socket: Socket, room: string) => {
     socket?.on("connect", () => {
       wormBoxAction("Connected...", "success");
     });
@@ -53,18 +53,22 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
       wormBoxAction("Disconnected!!!", "danger");
     });
 
-    socket?.on("onNewMessage", (data: IMessage) => {
-      if (data.chatId == router.query.id) {
-        addChatMessages(data);
-        scrollToDown();
-      }
+    socket?.on(`userConnected-${room}`, (data: IUserRoom) => {
+      console.log("user connected", data);
     });
 
-    socket?.on("onRemoveMessage", (data: IMessage) => {
-      if (data.chatId == router.query.id) {
-        addChatRemovedMessages(data);
-        removeMessage(data.id);
-      }
+    socket?.on(`userDisconnected-${room}`, (data: IUserRoom) => {
+      console.log("user disconnected", data);
+    });
+
+    socket?.on(`onNewMessage-${room}`, (data: IMessage) => {
+      addChatMessages(data);
+      scrollToDown();
+    });
+
+    socket?.on(`onRemoveMessage-${room}`, (data: IMessage) => {
+      addChatRemovedMessages(data);
+      removeMessage(data.id);
     });
   };
 
@@ -78,7 +82,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
         id: generateRandom(),
         userName,
         userId,
-        chatId: router.query.id,
+        room: router.query.id,
         message,
         createdAt: new Date().toISOString(),
         colorGenerate,

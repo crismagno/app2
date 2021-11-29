@@ -4,7 +4,11 @@ import { IMessage } from "../../components/Chat/RenderMessages";
 export class SocketChat {
   private static socket: Socket = null;
 
-  public async start(username: string, room: string): Promise<Socket> | never {
+  public async start(
+    userId: string,
+    username: string,
+    room: string
+  ): Promise<Socket> | never {
     try {
       const manager = new Manager(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
         transports: ["websocket", "polling"],
@@ -14,8 +18,10 @@ export class SocketChat {
         reconnection: true,
         multiplex: false,
         query: {
+          userId,
           username,
           room,
+          avatar: "",
         },
       });
 
