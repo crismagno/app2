@@ -1,4 +1,5 @@
 import React from "react";
+import { Avatar } from "../../General/Avatar";
 import { IUserRoom } from "../functions/types";
 
 interface IListUsersProps {
@@ -8,9 +9,6 @@ interface IListUsersProps {
 export const ListUsers: React.FC<IListUsersProps> = ({
   usersRoom,
 }): JSX.Element => {
-  const avatarDefault =
-    "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-
   return (
     <div
       className={`
@@ -29,29 +27,7 @@ export const ListUsers: React.FC<IListUsersProps> = ({
               d-flex items-center p-1 pb-2 mt-2
             `}
           >
-            {userRoom.avatar ? (
-              <img
-                src={userRoom.avatar || avatarDefault}
-                alt={"user avatar"}
-                className={`border-1 rounded-full mr-1 shadow`}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderColor: "#FFF5",
-                  objectFit: "cover",
-                }}
-              />
-            ) : (
-              <div
-                className={`
-								d-flex justify-center items-center 
-								border rounded-full 
-								w-10 h-10 text-blue-600 bg-gray-200 mr-1 shadow
-							`}
-              >
-                <i className={`fa fa-user-astronaut text-2xl`} />
-              </div>
-            )}
+            <Avatar src={userRoom.avatar} size={40} />
             <div
               className={`
 						d-flex flex-column p-1

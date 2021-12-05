@@ -1,5 +1,6 @@
 import router from "next/router";
 import { useState } from "react";
+import { Avatar } from "../components/General/Avatar";
 import { IconChatAlt } from "./../components/General/icons";
 
 export default function Login() {
@@ -17,7 +18,7 @@ export default function Login() {
       router.push(`/chat/${room}?userName=${userName}&userAvatar=${avatar}`);
     }
     if (type == "video") {
-      router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
+      // router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
     }
   };
 
@@ -32,7 +33,8 @@ export default function Login() {
         `}
       >
         <div className={`d-flex justify-content-center mb-3`}>
-          {avatar ? (
+          <Avatar src={avatar} size={150} />
+          {/* {avatar ? (
             <img
               src={avatar}
               alt={"user avatar"}
@@ -46,7 +48,7 @@ export default function Login() {
             />
           ) : (
             IconChatAlt(40)
-          )}
+          )} */}
         </div>
         <div className={"d-flex"}>
           <div className="form-check mx-2">

@@ -32,8 +32,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     useState<IChatScrollPosition>(null);
   const chatMessagesRef = useRef(null);
   const socketChat = new SocketChat();
-  const avatar =
-    "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
 
   useEffect(() => {
     if (router.query.id) {
@@ -52,7 +50,7 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     userId: userId,
     username: String(router?.query?.userName),
     room: String(router.query.id),
-    avatar: String(router?.query?.userAvatar || avatar),
+    avatar: String(router?.query?.userAvatar),
     userColor: colorGenerate,
   });
 
