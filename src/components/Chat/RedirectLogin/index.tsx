@@ -7,7 +7,7 @@ export const RedirectLogin: React.FC<any> = (): JSX.Element => {
       style={{ height: "100vh" }}
       className={"d-flex flex-column justify-content-center align-items-center"}
     >
-      <Link href={"/login"} passHref>
+      <Link href={"/"} passHref>
         <button className={"btn btn-secondary btn-lg"}>Ir para login</button>
       </Link>
     </div>
