@@ -67,7 +67,7 @@ export default function Login() {
           <input
             type="text"
             className="form-control"
-            placeholder="Insert url avatar on call"
+            placeholder="Url avatar"
             onChange={(event) => setAvatar(event.target.value)}
           />
         </div>
@@ -75,7 +75,7 @@ export default function Login() {
           <input
             type="text"
             className="form-control"
-            placeholder="Insert name on call"
+            placeholder="Name"
             onChange={(event) => setUserName(event.target.value)}
             maxLength={30}
           />
@@ -84,7 +84,7 @@ export default function Login() {
           <input
             type="text"
             className="form-control"
-            placeholder="Insert room of call"
+            placeholder="Name room"
             onChange={(event) => setRoom(event.target.value)}
           />
         </div>
