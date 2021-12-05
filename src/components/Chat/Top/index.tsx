@@ -51,8 +51,14 @@ export const ChatTop: React.FC<IChatTopProps> = ({
               "btn-outline-light border-none"
             } d-flex align-items-center shadow`}
           >
-            {/* <i className={`fa ${hoverRemoveAllMessages && "fa-trash-alt" || "fa-comment-dots"} `}></i> */}
-            {hoverRemoveAllMessages ? IconTrashAlt(5) : IconChatAlt(5)}
+            <i
+              className={
+                hoverRemoveAllMessages
+                  ? "far fa-trash-alt"
+                  : "far fa-comment-dots"
+              }
+            ></i>
+            {/* {hoverRemoveAllMessages ? IconTrashAlt(5) : IconChatAlt(5)} */}
             <h6 className={"mx-2 p-0 m-0"}>{messagesLength}</h6>
           </button>
         </div>

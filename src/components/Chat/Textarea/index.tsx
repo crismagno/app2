@@ -14,7 +14,6 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
   sendMessageInvoke,
   setIsVisiblePicker,
   value,
-  children,
 }): JSX.Element => {
   const colorBtnPicker = `bg-gradient-to-tr from-gray-500 to-gray-600
     hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
@@ -36,13 +35,15 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
         className={`btn ${colorBtnPicker} text-white mt-1 shadow-none h-100 mb-1 ml-1 px-4 mx-1`}
         onClick={setIsVisiblePicker}
       >
-        {IconSmileAlt(5)}
+        <i className="far fa-smile" />
+        {/* {IconSmileAlt(5)} */}
       </button>
       <button
         className={`btn ${colorBtnSend} text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4`}
         onClick={sendMessageInvoke}
       >
-        {IconPlaneAlt(5)}
+        <i className="far fa-paper-plane" />
+        {/* {IconPlaneAlt(5)} */}
       </button>
     </div>
   );
