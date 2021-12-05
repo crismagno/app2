@@ -164,3 +164,7 @@ a {
   height: 300px !important;
   overflow-x: hidden;
 }
+
+.avatar-list-chat {
+  border-color: #fff6;
+}

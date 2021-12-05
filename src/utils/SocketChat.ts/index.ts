@@ -1,15 +1,12 @@
 import { Socket, Manager } from "socket.io-client";
 import { IMessage } from "../../components/Chat/RenderMessages";
+import { ISocketChatQuery } from "./types";
 
 export class SocketChat {
   private static socket: Socket = null;
 
   public async start(
-    userId: string,
-    username: string,
-    room: string,
-    avatar: string,
-    userColor: string
+    query: Partial<ISocketChatQuery>
   ): Promise<Socket> | never {
     try {
       const manager = new Manager(process.env.NEXT_PUBLIC_URL_SOCKET_IO, {
@@ -19,13 +16,7 @@ export class SocketChat {
         reconnectionDelayMax: 10000,
         reconnection: true,
         multiplex: false,
-        query: {
-          userId,
-          username,
-          room,
-          avatar,
-          userColor,
-        },
+        query,
       });
 
       SocketChat.socket = manager.socket(

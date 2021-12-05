@@ -6,6 +6,8 @@ import { IUseChatFunctions, IUserRoom, IWormState } from "./types";
 import { Socket } from "socket.io-client";
 import { IChatScrollPosition } from "../types";
 import { SocketChat } from "../../../utils/SocketChat.ts";
+import { ISocketChatQuery } from "../../../utils/SocketChat.ts/types";
+import { NextRouter } from "next/router";
 
 const colorGenerate: string = generateColor();
 
@@ -37,20 +39,22 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     if (router.query.id) {
       setUserName(String(router?.query?.userName));
       socketChat
-        .start(
-          userId,
-          String(router?.query?.userName),
-          String(router.query.id),
-          String(router?.query?.userAvatar || avatar),
-          colorGenerate
-        )
+        .start(querySocketChat(router))
         .then((socket) => socketOn(socket, String(router.query.id)))
         .catch((error) => wormBoxAction(error, "danger", 2000));
       return () => {
         socketChat.disconnect();
       };
     }
-  }, [router.query.id]);
+  }, [router]);
+
+  const querySocketChat = (router: NextRouter): Partial<ISocketChatQuery> => ({
+    userId: userId,
+    username: String(router?.query?.userName),
+    room: String(router.query.id),
+    avatar: String(router?.query?.userAvatar || avatar),
+    userColor: colorGenerate,
+  });
 
   // listening all socket on
   const socketOn = (socket: Socket, room: string) => {

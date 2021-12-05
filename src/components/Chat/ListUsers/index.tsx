@@ -14,10 +14,10 @@ export const ListUsers: React.FC<IListUsersProps> = ({
   return (
     <div
       className={`
-		d-flex flex-column
-		p-3
-		col-lg-4 col-md-4 col-sm-2 col-12
-	`}
+        d-flex flex-column
+        p-3
+        col-lg-4 col-md-4 col-sm-2 col-12
+      `}
     >
       <div>Users: {usersRoom.length}</div>
       {usersRoom.map((userRoom: IUserRoom, index: number): JSX.Element => {
@@ -25,9 +25,9 @@ export const ListUsers: React.FC<IListUsersProps> = ({
           <div
             key={`users-room-${index}`}
             className={`
-						border-bottom rounded-sm shadow
-						d-flex items-center p-1 pb-2 mt-2
-					`}
+              border-bottom rounded-sm shadow
+              d-flex items-center p-1 pb-2 mt-2
+            `}
           >
             {userRoom.avatar ? (
               <img
