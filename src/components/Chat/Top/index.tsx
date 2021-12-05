@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { Avatar } from "../../General/Avatar";
 import { IconChatAlt, IconTrashAlt } from "../../General/icons";
 
 interface IChatTopProps {
@@ -28,7 +29,9 @@ export const ChatTop: React.FC<IChatTopProps> = ({
       {/* top chat */}
       <div className={"d-flex justify-content-between align-items-center"}>
         <h1 className="d-flex  align-items-center text-center">
-          Social
+          <div className={"mx-2"}>
+            <Avatar src={""} size={40} />
+          </div>
           <div className="d-flex flex-column  justify-content-start align-items-start">
             <span
               style={{ fontSize: 13, color: colorUserName }}
