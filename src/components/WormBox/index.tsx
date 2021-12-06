@@ -1,17 +1,28 @@
 // import stylesWormBox from "./WormBox.module.scss";
 
+import { Animated, AnimationString } from "react-animated-css";
+
 export interface IWormBoxProps {
   className?: string;
   text?: string | number;
   icon?: JSX.Element;
   colorChoose?: "white" | "warning" | "danger" | "success" | "dark";
-  animation?: "fadeIn" | "slideInUp" | "slideInDown";
+  animationIn?: AnimationString;
+  animationOut?: AnimationString;
   show?: boolean;
 }
 
-export const WormBox: React.FC<IWormBoxProps> = (props): JSX.Element => {
+export const WormBox: React.FC<IWormBoxProps> = ({
+  animationIn = "fadeIn",
+  animationOut = "fadeOut",
+  className,
+  colorChoose,
+  icon,
+  show,
+  text,
+}): JSX.Element => {
   const styleChoose = () => {
-    switch (props?.colorChoose) {
+    switch (colorChoose) {
       case "white":
         return "bg-gradient-to-tr from-white to-gray-50 text-gray-800";
       case "warning":
@@ -26,26 +37,24 @@ export const WormBox: React.FC<IWormBoxProps> = (props): JSX.Element => {
   };
 
   return (
-    <>
-      {props.show && (
-        <div
-          className={`
-                flex justify-start items-center px-4 py-2 
-                min-h-0 w-96 max-h-96
-                ${styleChoose()}
-                text-base
-                z-10
-                rounded-md
-                shadow-2xl
-                ${props?.animation ?? "fadeIn"}
-                ${props?.className}
-            `}
-        >
-          <span className={`mr-4`}>{props?.icon}</span>
-          <span>{props?.text}</span>
-        </div>
-      )}
-    </>
+    <Animated
+      animationIn={animationIn}
+      animationOut={animationOut}
+      isVisible={show}
+      className={`
+        flex justify-start items-center px-4 py-2 
+        min-h-0 w-96 max-h-96
+        ${styleChoose()}
+        text-base
+        z-10
+        rounded-md
+        shadow-2xl
+        ${className}
+      `}
+    >
+      <span className={`mr-4`}>{icon}</span>
+      <span>{text}</span>
+    </Animated>
   );
 };
 

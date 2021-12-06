@@ -15,9 +15,6 @@ export const ChatEmojiPicker: React.FC<IChatEmojiPickerProps> = ({
     <Animated
       animationIn={"fadeIn"}
       animationOut="fadeOut"
-      animationInDelay={500}
-      animationInDuration={500}
-      animationOutDuration={500}
       isVisible={isVisiblePicker}
     >
       <div className={`view-picker`}>

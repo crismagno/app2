@@ -58,7 +58,8 @@ export default function Login() {
         colorChoose={wormState.colorChoose}
         show={wormState.show}
         className="fixed top-3 right-3"
-        animation="slideInUp"
+        animationIn="slideInDown"
+        animationOut="slideOutUp"
       />
 
       <div
