@@ -8,44 +8,37 @@ export const Avatar: React.FC<{
   src: string;
   size?: number;
   animation?: AnimationString;
-}> = ({ src, size = 50, animation = "fadeIn" }): JSX.Element => {
+}> = ({ src, size = 50, animation = "flipInY" }): JSX.Element => {
   const styleAvatar: React.CSSProperties = {
     width: size,
     height: size,
-    borderColor: "#FFF5",
     objectFit: "cover",
   };
 
   return (
-    <Animated
-      animationIn={animation}
-      animationOut="fadeOut"
-      animationInDelay={100}
-      animationInDuration={400}
-      isVisible={true}
-    >
+    <Animated animationIn={animation} animationOut="fadeOut" isVisible={true}>
       {src ? (
         <object
           data={src}
           type="image/png"
           style={styleAvatar}
-          className={`border-1 rounded-full mr-1 shadow`}
+          className={`rounded-full mr-1 shadow`}
         >
           <img
             src={avatarDefault}
             alt={"user avatar"}
-            className={`border-1 rounded-full mr-1 shadow`}
+            className={`rounded-full mr-1 shadow`}
             style={styleAvatar}
           />
         </object>
       ) : (
         <div
           className={`
-				d-flex justify-center items-center 
-				border rounded-full 
-				w-10 h-10 text-blue-600 bg-gray-200 mr-1 shadow
-			`}
-          style={{ width: size, height: size }}
+            d-flex justify-center items-center 
+            border rounded-full 
+            w-10 h-10 text-blue-600 bg-gray-200 mr-1 shadow
+          `}
+          style={styleAvatar}
         >
           <i
             className={`fa fa-user-astronaut text-2xl`}
