@@ -1,5 +1,5 @@
 import { Socket, Manager } from "socket.io-client";
-import { IMessage } from "../../components/Chat/RenderMessages";
+import { IMessage } from "../../containers/Chat/RenderMessages";
 import { ISocketChatQuery } from "./types";
 
 export class SocketChat {

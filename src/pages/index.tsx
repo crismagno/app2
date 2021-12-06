@@ -1,6 +1,6 @@
 import router from "next/router";
 import { useState } from "react";
-import { Avatar } from "../components/General/Avatar";
+import { Avatar } from "../components/Avatar";
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("");

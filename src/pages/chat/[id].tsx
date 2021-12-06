@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
-import ChatTop from "./../../components/Chat/Top";
-import RedirectLogin from "./../../components/Chat/RedirectLogin";
-import ChatHeader from "./../../components/Chat/Header";
-import ChatContentMessages from "./../../components/Chat/ContentMessages";
-import ChatTextarea from "./../../components/Chat/Textarea";
-import ChatEmojiPicker from "./../../components/Chat/EmojiPicker";
-import ChatRemoveMessage from "./../../components/Chat/RemoveMessage";
-import ChatButtonsTopDown from "./../../components/Chat/ButtonsTopDown";
-import { ListUsers } from "./../../components/Chat/ListUsers";
-import { ChatRenderMessages } from "../../components/Chat/RenderMessages";
-import { WormBox } from "../../components/General/WormBox";
-import { useChatFunctionsSocketIO } from "../../components/Chat/functions/useChatFunctionsSocketIO";
+import ChatTop from "../../containers/Chat/Top";
+import RedirectLogin from "../../containers/Chat/RedirectLogin";
+import ChatHeader from "../../containers/Chat/Header";
+import ChatContentMessages from "../../containers/Chat/ContentMessages";
+import ChatTextarea from "../../containers/Chat/Textarea";
+import ChatEmojiPicker from "../../containers/Chat/EmojiPicker";
+import ChatRemoveMessage from "../../containers/Chat/RemoveMessage";
+import ChatButtonsTopDown from "../../containers/Chat/ButtonsTopDown";
+import { ListUsers } from "../../containers/Chat/ListUsers";
+import { ChatRenderMessages } from "../../containers/Chat/RenderMessages";
+import { WormBox } from "../../components/WormBox";
+import { useChatFunctionsSocketIO } from "../../containers/Chat/functions/useChatFunctionsSocketIO";
 
 export default function Chat() {
   const router = useRouter();
