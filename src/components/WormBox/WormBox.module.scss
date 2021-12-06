@@ -1,0 +1,38 @@
+.fadeIn {
+    animation: fadeIn .5s ease-in-out;
+}
+.slideInUp {
+    animation: slideInUp .5s ease-in-out;
+}
+.slideInDown {
+    animation: slideInDown .5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-50px);
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
