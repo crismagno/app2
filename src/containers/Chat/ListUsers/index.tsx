@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar } from "../../../components/Avatar";
+import Avatar from "../../../components/Avatar";
 import { IUserRoom } from "../functions/types";
 
 interface IListUsersProps {

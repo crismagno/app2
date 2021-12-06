@@ -1,6 +1,6 @@
 import router from "next/router";
 import { useState } from "react";
-import { Avatar } from "../components/Avatar";
+import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
 import { IWormBoxProps, WormBox } from "./../components/WormBox";
 

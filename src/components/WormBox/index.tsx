@@ -1,5 +1,6 @@
 // import stylesWormBox from "./WormBox.module.scss";
 
+import { memo } from "react";
 import { Animated, AnimationString } from "react-animated-css";
 
 export interface IWormBoxProps {
@@ -58,4 +59,4 @@ export const WormBox: React.FC<IWormBoxProps> = ({
   );
 };
 
-export default WormBox;
+export default memo(WormBox);

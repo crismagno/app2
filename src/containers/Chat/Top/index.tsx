@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Avatar } from "../../../components/Avatar";
+import Avatar from "../../../components/Avatar";
 import { IconChatAlt, IconTrashAlt } from "../../../components/General/icons";
 
 interface IChatTopProps {
