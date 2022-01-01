@@ -24,7 +24,7 @@ export const ChatEmojiPicker: React.FC<IChatEmojiPickerProps> = ({
           color={"#0D6EFD"}
           set={"google"}
           i18n={{
-            search: "Buscando...",
+            search: "Buscando",
             categories: {
               search: "Buscar",
               recent: "Recentes",
