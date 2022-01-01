@@ -48,6 +48,7 @@ export default function Chat() {
     removedMessages,
     removeMessageInvoke,
     usersRoom,
+    onChangeValueTextarea,
   } = useChatFunctionsSocketIO({ router });
 
   if (
@@ -132,7 +133,7 @@ export default function Chat() {
 
             {/* div textarea */}
             <ChatTextarea
-              onChange={(event) => setMessage(event.target.value)}
+              onChange={onChangeValueTextarea}
               onKeypress={onKeypress}
               sendMessageInvoke={sendMessageInvoke}
               setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}

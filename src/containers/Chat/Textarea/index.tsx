@@ -28,7 +28,6 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
       <button
         className={`
           btn bg-gradient-to-tr from-gray-500 to-gray-600
-          hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700
           text-white mt-1 
           shadow-none h-100 mb-1 ml-1 px-4 mx-1
         `}
@@ -39,7 +38,6 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
       <button
         className={`
           btn bg-gradient-to-tr from-blue-500 to-blue-600
-          hover:bg-gradient-to-tr hover:from-blue-600 hover:to-blue-700
         text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4
         `}
         onClick={sendMessageInvoke}

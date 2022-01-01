@@ -226,6 +226,10 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     }, duration);
   };
 
+  const onChangeValueTextarea = (event: any): void => {
+    setMessage(event.target.value);
+  };
+
   return {
     colorGenerate,
     router,
@@ -266,5 +270,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     removedMessages,
     setRemovedMessages,
     usersRoom,
+    onChangeValueTextarea,
   };
 };
