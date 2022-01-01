@@ -168,3 +168,9 @@ a {
 .avatar-list-chat {
   border-color: #fff6;
 }
+
+/* test */
+.btn,
+.btn:focus {
+  box-shadow: none;
+}
