@@ -50,4 +50,4 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
   );
 };
 
-export default memo(ChatTextarea);
+export default ChatTextarea;
