@@ -22,7 +22,6 @@ export const ChatTop: React.FC<IChatTopProps> = ({
   messagesLength,
   userId,
   userName,
-  children,
 }): JSX.Element => {
   return (
     <>

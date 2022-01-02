@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Avatar from "../../../components/Avatar";
 import { IUserRoom } from "../functions/types";
 
@@ -50,3 +50,5 @@ export const ListUsers: React.FC<IListUsersProps> = ({
     </div>
   );
 };
+
+export default memo(ListUsers);

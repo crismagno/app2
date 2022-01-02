@@ -1,4 +1,3 @@
-import { NextRouter } from "next/router";
 import { IWormBoxProps } from "../../../components/WormBox";
 
 export interface IWormState {
@@ -6,11 +5,6 @@ export interface IWormState {
   show: boolean;
   colorChoose: IWormBoxProps["colorChoose"];
 }
-
-export interface IUseChatFunctions {
-  router: NextRouter;
-}
-
 export interface IUserRoom {
   userId: string;
   username: string;

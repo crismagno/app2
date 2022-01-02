@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Animated } from "react-animated-css";
 import { IconChatAlt } from "../../../components/General/icons";
 
@@ -136,3 +137,5 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
     }
   );
 };
+
+export default memo(ChatRenderMessages);
