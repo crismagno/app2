@@ -75,7 +75,7 @@ export default function Chat() {
           <div
             className="
             d-flex flex-column justify-content-center 
-            col-lg-8 col-md-8 col-sm-10 col-12
+            col-lg-8 col-md-8 col-sm-12 col-12
           "
             style={{ height: "87vh", position: "relative" }}
           >

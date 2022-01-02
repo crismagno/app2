@@ -174,3 +174,48 @@ a {
 .btn:focus {
   box-shadow: none;
 }
+
+.container-hide-left {
+  position: relative;
+  display: flex;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .container-hide-left {
+    position: fixed;
+    display: none;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .container-hide-left {
+    position: fixed;
+    display: none;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .container-hide-left {
+    position: fixed;
+    display: none;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .container-hide-left {
+    position: relative;
+    display: flex;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .container-hide-left {
+    position: relative;
+    display: flex;
+  }
+}
