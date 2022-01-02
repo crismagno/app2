@@ -22,6 +22,12 @@ export interface IMessage {
   colorGenerate: string;
 }
 
+const colorSend = `bg-gradient-to-tr from-blue-600 to-blue-800
+    hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
+
+const colorReceive = `bg-gradient-to-tr from-gray-500 to-gray-600
+    hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
+
 export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   messages,
   message,
@@ -31,12 +37,6 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   setMessage,
   removeMessage,
 }): JSX.Element | any => {
-  const colorSend = `bg-gradient-to-tr from-blue-600 to-blue-800
-    hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
-
-  const colorReceive = `bg-gradient-to-tr from-gray-500 to-gray-600
-    hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
-
   let start;
   let end;
   let delta;
@@ -76,20 +76,20 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
     (messageElement: IMessage, index: number): JSX.Element => {
       return (
         <div key={`message-element-${index}`}>
-          <Animated
+          <div
             className={`
               d-flex flex-column 
               ${
                 (messageElement.userId === userId && "align-items-end") ||
                 "align-items-start"
               }`}
-            animationIn={
-              messageElement.userId === userId ? "slideInRight" : "slideInLeft"
-            }
-            animationOut="fadeOut"
-            animationOutDelay={100}
-            animationInDuration={300}
-            isVisible={true}
+            // animationIn={
+            //   messageElement.userId === userId ? "slideInRight" : "slideInLeft"
+            // }
+            // animationOut="fadeOut"
+            // animationOutDelay={100}
+            // animationInDuration={300}
+            // isVisible={true}
           >
             {messageElement.userId !== userId && (
               <div
@@ -131,7 +131,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 {new Date(messageElement.createdAt).toLocaleString()}
               </span>
             </div>
-          </Animated>
+          </div>
         </div>
       );
     }
