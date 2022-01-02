@@ -52,6 +52,11 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
     end = new Date();
     delta = (end - start) / 1000.0;
 
+    // just show trash on messages user chat
+    if (message.userId !== userId) {
+      return;
+    }
+
     if (delta > 1) {
       if (
         messagesToShowTrash.findIndex(
