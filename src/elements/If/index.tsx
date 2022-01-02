@@ -1,6 +1,11 @@
 import React, { memo } from "react";
 
-export const If: React.FC<{ condition: boolean }> = ({
+interface IIfProps {
+  condition: boolean;
+  children: JSX.Element | JSX.Element[] | any;
+}
+
+export const If: React.FC<IIfProps> = ({
   condition,
   children,
 }): JSX.Element | any => {

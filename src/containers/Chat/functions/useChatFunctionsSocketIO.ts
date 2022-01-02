@@ -2,16 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { generateColor, generateRandom } from "../../../utils/helpers";
 import { IMessage } from "../RenderMessages";
 import { IWormBoxProps } from "../../../components/WormBox";
-import { IUseChatFunctions, IUserRoom, IWormState } from "./types";
+import { IUserRoom, IWormState } from "./types";
 import { Socket } from "socket.io-client";
 import { IChatScrollPosition } from "../types";
 import { SocketChat } from "../../../utils/SocketChat.ts";
 import { ISocketChatQuery } from "../../../utils/SocketChat.ts/types";
-import { NextRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 const colorGenerate: string = generateColor();
 
-export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
+export const useChatFunctionsSocketIO = () => {
+  const router: NextRouter = useRouter();
+
   const [wormState, setWormState] = useState<IWormState>({
     colorChoose: "white",
     show: false,
@@ -26,7 +28,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
   const [hoverRemoveAllMessages, setHoverRemoveAllMessages] = useState(false);
-  const [isMouseEnterDivMain, setIsMouseEnterDivMain] = useState(true);
   const [usersRoom, setUsersRoom] = useState<IUserRoom[]>([]);
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
@@ -265,8 +266,6 @@ export const useChatFunctionsSocketIO = ({ router }: IUseChatFunctions) => {
     onKeypress,
     onScrollChatMessages,
     pickerOnClick,
-    isMouseEnterDivMain,
-    setIsMouseEnterDivMain,
     removedMessages,
     setRemovedMessages,
     usersRoom,

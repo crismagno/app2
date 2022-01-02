@@ -1,20 +1,17 @@
-import { useRouter } from "next/router";
 import ChatTop from "../../containers/Chat/Top";
-import RedirectLogin from "../../containers/Chat/RedirectLogin";
 import ChatHeader from "../../containers/Chat/Header";
 import ChatContentMessages from "../../containers/Chat/ContentMessages";
 import ChatTextarea from "../../containers/Chat/Textarea";
 import ChatEmojiPicker from "../../containers/Chat/EmojiPicker";
-import ChatRemoveMessage from "../../containers/Chat/RemoveMessage";
+// import ChatRemoveMessage from "../../containers/Chat/RemoveMessage";
 import ChatButtonsTopDown from "../../containers/Chat/ButtonsTopDown";
-import { ListUsers } from "../../containers/Chat/ListUsers";
-import { ChatRenderMessages } from "../../containers/Chat/RenderMessages";
-import { WormBox } from "../../components/WormBox";
+import ListUsers from "../../containers/Chat/ListUsers";
+import ChatRenderMessages from "../../containers/Chat/RenderMessages";
+import WormBox from "../../components/WormBox";
 import { useChatFunctionsSocketIO } from "../../containers/Chat/functions/useChatFunctionsSocketIO";
+import ChatAuth from "../../containers/Chat/Auth";
 
 export default function Chat() {
-  const router = useRouter();
-
   const {
     colorGenerate,
     wormState,
@@ -43,23 +40,13 @@ export default function Chat() {
     onKeypress,
     onScrollChatMessages,
     pickerOnClick,
-    isMouseEnterDivMain,
-    setIsMouseEnterDivMain,
     removedMessages,
     removeMessageInvoke,
     usersRoom,
-  } = useChatFunctionsSocketIO({ router });
-
-  if (
-    Object.keys(router?.query).indexOf("userName") == -1 ||
-    !router?.query?.userName ||
-    !String(router?.query?.id).trim()
-  ) {
-    return <RedirectLogin />;
-  }
+  } = useChatFunctionsSocketIO();
 
   return (
-    <>
+    <ChatAuth>
       <WormBox
         text={wormState.text}
         colorChoose={wormState.colorChoose}
@@ -106,8 +93,6 @@ export default function Chat() {
 
             {/*  div messages */}
             <ChatContentMessages
-              // onMouseOver={() => setIsMouseEnterDivMain(true)}
-              // onMouseLeave={() => setIsMouseEnterDivMain(false)}
               onScrollChatMessages={onScrollChatMessages}
               chatMessagesRef={chatMessagesRef}
             >
@@ -124,7 +109,6 @@ export default function Chat() {
 
             {/* buttons top down */}
             <ChatButtonsTopDown
-              show={isMouseEnterDivMain}
               positionScroll={positionScrollChatMessages}
               scrollToTop={scrollToTop}
               scrollToDown={scrollToDown}
@@ -147,6 +131,6 @@ export default function Chat() {
           </div>
         </div>
       </div>
-    </>
+    </ChatAuth>
   );
 }

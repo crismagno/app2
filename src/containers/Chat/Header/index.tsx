@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { memo } from "react";
 
 export const ChatHeader: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -10,4 +10,4 @@ export const ChatHeader: React.FC = (): JSX.Element => {
   );
 };
 
-export default ChatHeader;
+export default memo(ChatHeader);
