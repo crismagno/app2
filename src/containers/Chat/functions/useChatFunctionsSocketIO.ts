@@ -56,7 +56,7 @@ export const useChatFunctionsSocketIO = () => {
   });
 
   // listening all socket on
-  const socketOn = (socket: Socket, room: string) => {
+  const socketOn = (socket: Socket, room: string): void => {
     socket?.on("connect", () => {
       wormBoxAction("Connected...", "success");
     });
@@ -98,7 +98,7 @@ export const useChatFunctionsSocketIO = () => {
   };
 
   // send message to socket
-  const sendMessageInvoke = async () => {
+  const sendMessageInvoke = async (): Promise<void> => {
     try {
       if (!message?.trim()) {
         return wormBoxAction("Empty message!");
@@ -141,24 +141,24 @@ export const useChatFunctionsSocketIO = () => {
     setRemovedMessages((messages) => [...messages, data]);
 
   // remove message of messages of component
-  const removeMessage = (id: IMessage["id"]) =>
+  const removeMessage = (id: IMessage["id"]): void =>
     setMessages((messages) =>
       messages.filter((messageFilter) => messageFilter.id !== id)
     );
 
   // part of events components=======================
-  const scrollToDown = () => {
+  const scrollToDown = (): void => {
     chatMessagesRef?.current.scroll(
       0,
       chatMessagesRef?.current.scrollHeight,
       "smooth"
     );
   };
-  const scrollToTop = () => {
+  const scrollToTop = (): void => {
     chatMessagesRef?.current.scroll(0, 0, "smooth");
   };
 
-  const onDragOverHandler = (event) => {
+  const onDragOverHandler = (event: any): void => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
     setIsDragOverRemove(true);
@@ -171,11 +171,11 @@ export const useChatFunctionsSocketIO = () => {
     event.dropEffect = "move";
   };
 
-  const onDragEndBubbleMessageHandler = (event) => {
+  const onDragEndBubbleMessageHandler = (event: any): void => {
     setIsDragMessage(false);
   };
 
-  const onDropHandler = (event) => {
+  const onDropHandler = (event: any): void => {
     event.preventDefault();
     const data = event.dataTransfer.getData("text");
     const messageToRemove: IMessage = JSON.parse(data);
@@ -184,18 +184,18 @@ export const useChatFunctionsSocketIO = () => {
     setIsDragOverRemove(false);
   };
 
-  const onDragDropLeaveHandler = (event) => {
+  const onDragDropLeaveHandler = (event: any): void => {
     setIsDragOverRemove(false);
   };
 
-  const onKeypress = (event) => {
+  const onKeypress = (event: any): void => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessageInvoke();
     }
   };
 
-  const onScrollChatMessages = (event) => {
+  const onScrollChatMessages = (event: any): void => {
     setPositionScrollChatMessages({
       scrollTop: event.target.scrollTop,
       clientHeight: event.target.clientHeight,

@@ -51,6 +51,13 @@ export default function Login() {
     }
   };
 
+  const onKeyPress = (event: any): void => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      goToChatRoom();
+    }
+  };
+
   return (
     <>
       <WormBox
@@ -119,6 +126,7 @@ export default function Login() {
               className="form-control"
               placeholder="Name"
               onChange={(event) => setUserName(event.target.value)}
+              onKeyPress={onKeyPress}
               maxLength={30}
             />
           </div>
@@ -128,6 +136,7 @@ export default function Login() {
               className="form-control"
               placeholder="Name room"
               onChange={(event) => setRoom(event.target.value)}
+              onKeyPress={onKeyPress}
             />
           </div>
           <div className={"d-flex flex-column mt-2"}>
