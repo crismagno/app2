@@ -1,13 +1,12 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Animated } from "react-animated-css";
-import { IconChatAlt } from "../../../components/General/icons";
 
 export interface IRenderMessagesProps {
   messages: any;
   message: string;
   userId: string;
-  onDragStartHandler: (event, messageElement) => void;
-  onDragEndHandler: (event) => void;
+  onDragStartBubbleMessageHandler: (event, messageElement) => void;
+  onDragEndBubbleMessageHandler: (event) => void;
   setMessage: (string) => void;
   removeMessage: (message: IMessage) => Promise<void>;
 }
@@ -23,20 +22,24 @@ export interface IMessage {
 }
 
 const colorSend = `bg-gradient-to-tr from-blue-600 to-blue-800
-    hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
+hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
 
 const colorReceive = `bg-gradient-to-tr from-gray-500 to-gray-600
-    hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
+hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
 
 export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   messages,
   message,
   userId,
-  onDragStartHandler,
-  onDragEndHandler,
+  onDragStartBubbleMessageHandler,
+  onDragEndBubbleMessageHandler,
   setMessage,
   removeMessage,
 }): JSX.Element | any => {
+  const [messagesToShowTrash, setMessagesToShowTrash] = useState<IMessage[]>(
+    []
+  );
+
   let start;
   let end;
   let delta;
@@ -45,12 +48,30 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
     start = new Date();
   };
 
-  const onMouseUp = (message: IMessage) => {
+  const onMouseUp = (message: IMessage): void => {
     end = new Date();
     delta = (end - start) / 1000.0;
 
-    if (delta > 1.5) {
-      removeMessage(message);
+    if (delta > 1) {
+      if (
+        messagesToShowTrash.findIndex(
+          (_messageToShowTrash: IMessage) =>
+            message.id === _messageToShowTrash.id
+        ) === -1
+      ) {
+        setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => [
+          ..._messagesToShowTrash,
+          message,
+        ]);
+
+        setTimeout(() => {
+          setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => {
+            return _messagesToShowTrash.filter(
+              (_messageToShowTrash) => message.id !== _messageToShowTrash.id
+            );
+          });
+        }, 5000);
+      }
     }
   };
 
@@ -75,21 +96,39 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   return messages.map(
     (messageElement: IMessage, index: number): JSX.Element => {
       return (
-        <div key={`message-element-${index}`}>
-          <div
+        <div
+          key={`message-element-${index}`}
+          className={`flex ${
+            messageElement.userId === userId ? "flex-row" : "flex-row-reverse"
+          } justify-between items-center`}
+        >
+          {/* show trash component */}
+          {messagesToShowTrash.findIndex(
+            (_messageToShowTrash: IMessage) =>
+              messageElement.id === _messageToShowTrash.id
+          ) > -1 && (
+            <button
+              className="btn btn-outline-danger btn-sm inline-block"
+              onClick={() => removeMessage(messageElement)}
+            >
+              <i className="far fa-trash-alt" />
+            </button>
+          )}
+
+          {/* bubble message component */}
+          <Animated
             className={`
-              d-flex flex-column 
+              inline-flex flex-1 flex-column
               ${
                 (messageElement.userId === userId && "align-items-end") ||
                 "align-items-start"
               }`}
-            // animationIn={
-            //   messageElement.userId === userId ? "slideInRight" : "slideInLeft"
-            // }
-            // animationOut="fadeOut"
-            // animationOutDelay={100}
-            // animationInDuration={300}
-            // isVisible={true}
+            animationIn={
+              messageElement.userId === userId ? "slideInRight" : "slideInLeft"
+            }
+            animationOut="fadeOut"
+            animationInDuration={300}
+            isVisible
           >
             {messageElement.userId !== userId && (
               <div
@@ -103,13 +142,14 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
               </div>
             )}
             <div
-              draggable={messageElement.userId === userId}
+              draggable
               onDragStart={(event) =>
                 messageElement.userId === userId &&
-                onDragStartHandler(event, messageElement)
+                onDragStartBubbleMessageHandler(event, messageElement)
               }
               onDragEnd={(event) =>
-                messageElement.userId === userId && onDragEndHandler(event)
+                messageElement.userId === userId &&
+                onDragEndBubbleMessageHandler(event)
               }
               onDoubleClick={() =>
                 setMessage(`${message}${messageElement.message}`)
@@ -124,14 +164,14 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 shadow
                 ${messageElement.userId === userId ? colorSend : colorReceive}
               `}
-              style={{ maxWidth: "80%" }}
+              style={{ maxWidth: "80%", minWidth: "7rem" }}
             >
               <div className={""}>{messageElement.message}</div>
               <span style={{ fontSize: 9 }} className={""}>
                 {new Date(messageElement.createdAt).toLocaleString()}
               </span>
             </div>
-          </div>
+          </Animated>
         </div>
       );
     }

@@ -164,14 +164,14 @@ export const useChatFunctionsSocketIO = () => {
     setIsDragOverRemove(true);
   };
 
-  const onDragStartHandler = (event, messageElement: IMessage) => {
+  const onDragStartBubbleMessageHandler = (event, messageElement: IMessage) => {
     setIsDragMessage(true);
     setIsVisiblePicker(false);
     event.dataTransfer.setData("text/plain", JSON.stringify(messageElement));
     event.dropEffect = "move";
   };
 
-  const onDragEndHandler = (event) => {
+  const onDragEndBubbleMessageHandler = (event) => {
     setIsDragMessage(false);
   };
 
@@ -259,8 +259,8 @@ export const useChatFunctionsSocketIO = () => {
     scrollToDown,
     scrollToTop,
     onDragOverHandler,
-    onDragStartHandler,
-    onDragEndHandler,
+    onDragStartBubbleMessageHandler,
+    onDragEndBubbleMessageHandler,
     onDropHandler,
     onDragDropLeaveHandler,
     onKeypress,
