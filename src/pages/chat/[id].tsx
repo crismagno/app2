@@ -132,13 +132,37 @@ export default function Chat() {
             />
 
             {/* div textarea */}
-            <ChatTextarea
+            {/* <ChatTextarea
               onChange={onChangeValueTextarea}
               onKeypress={onKeypress}
               sendMessageInvoke={sendMessageInvoke}
               setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
               value={message}
-            />
+            /> */}
+            <div className={"d-flex flex-row align-items-center"}>
+              <textarea
+                onKeyPress={onKeypress}
+                className="shadow-none form-control"
+                onChange={onChangeValueTextarea}
+                value={message}
+                style={{ resize: "none" }}
+                placeholder={`Message...`}
+              />
+              <button
+                className={`btn btn-secondary h-100 ml-1 px-4 mx-1
+        `}
+                onClick={() => setIsVisiblePicker(!isVisiblePicker)}
+              >
+                <i className="far fa-smile" />
+              </button>
+              <button
+                className={`btn btn-primary h-100 ml-0 px-4
+        `}
+                onClick={sendMessageInvoke}
+              >
+                <i className="far fa-paper-plane" />
+              </button>
+            </div>
 
             {/* picker */}
             <ChatEmojiPicker
