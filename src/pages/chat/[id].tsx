@@ -33,8 +33,8 @@ export default function Chat() {
     scrollToDown,
     scrollToTop,
     onDragOverHandler,
-    onDragStartHandler,
-    onDragEndHandler,
+    onDragStartBubbleMessageHandler,
+    onDragEndBubbleMessageHandler,
     onDropHandler,
     onDragDropLeaveHandler,
     onKeypress,
@@ -101,8 +101,10 @@ export default function Chat() {
                 message={message}
                 userId={userId}
                 setMessage={setMessage}
-                onDragStartHandler={onDragStartHandler}
-                onDragEndHandler={onDragEndHandler}
+                onDragStartBubbleMessageHandler={
+                  onDragStartBubbleMessageHandler
+                }
+                onDragEndBubbleMessageHandler={onDragEndBubbleMessageHandler}
                 removeMessage={removeMessageInvoke}
               />
             </ChatContentMessages>
