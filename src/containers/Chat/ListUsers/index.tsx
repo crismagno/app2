@@ -28,7 +28,9 @@ export const ListUsers: React.FC<IListUsersProps> = ({
         d-md-flex flex-column p-3
         col-lg-4 col-md-4 col-12
         md:relative sm:absolute absolute
-        ${toggleClasses ? "sm:-left-full -left-full" : "sm:left-0 left-0"}
+        ${
+          toggleClasses ? "sm:-left-full -left-full" : "sm:left-0 left-0"
+        } md:left-0
         z-10
         bg-gradient-to-tr from-gray-800 to-gray-900
         shadow-lg
