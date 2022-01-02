@@ -26,7 +26,7 @@ export const ChatContentMessages: React.FC<IChatContentMessagesProps> = ({
         my-2 pt-2 pb-1 px-2
         bg-gradient-to-tr from-gray-800 to-gray-900
       "
-      style={{ overflowX: "hidden" }}
+      style={{ height: "450px", overflowX: "hidden" }}
     >
       {children}
     </div>
