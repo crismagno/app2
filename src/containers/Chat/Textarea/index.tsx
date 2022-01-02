@@ -26,19 +26,14 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
         placeholder={`Message...`}
       />
       <button
-        className={`
-          btn bg-gradient-to-tr from-gray-500 to-gray-600
-          text-white mt-1 
-          shadow-none h-100 mb-1 ml-1 px-4 mx-1
+        className={`btn btn-secondary h-100 ml-1 px-4 mx-1
         `}
         onClick={setIsVisiblePicker}
       >
         <i className="far fa-smile" />
       </button>
       <button
-        className={`
-          btn bg-gradient-to-tr from-blue-500 to-blue-600
-        text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4
+        className={`btn btn-primary h-100 ml-0 px-4
         `}
         onClick={sendMessageInvoke}
       >
@@ -48,4 +43,4 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
   );
 };
 
-export default memo(ChatTextarea);
+export default ChatTextarea;
