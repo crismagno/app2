@@ -134,7 +134,7 @@ export default function Login() {
             <input
               type="text"
               className="form-control"
-              placeholder="Name room"
+              placeholder="Room"
               onChange={(event) => setRoom(event.target.value)}
               onKeyPress={onKeyPress}
             />

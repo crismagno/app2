@@ -9,7 +9,7 @@ interface IListUsersProps {
 export const ListUsers: React.FC<IListUsersProps> = ({
   usersRoom,
 }): JSX.Element => {
-  const [toggleClasses, setToggleClasses] = useState(true);
+  const [toggleClasses, setToggleClasses] = useState(false);
 
   // const styleHide = `sm:fixed top-0 left-0 d-flex d-sm-flex z-40`;
 
@@ -29,6 +29,9 @@ export const ListUsers: React.FC<IListUsersProps> = ({
         col-lg-4 col-md-4 col-12
         md:relative sm:absolute absolute
         ${toggleClasses ? "sm:-left-full -left-full" : "sm:left-0 left-0"}
+        md:-left-0
+        lg:-left-0 
+        -left-0
         z-10
         bg-gradient-to-tr from-gray-800 to-gray-900
         shadow-lg
