@@ -8,7 +8,9 @@ export const RedirectLogin: React.FC<any> = (): JSX.Element => {
       className={"d-flex flex-column justify-content-center align-items-center"}
     >
       <Link href={"/"} passHref>
-        <button className={"btn btn-secondary btn-lg"}>Ir para login</button>
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
       </Link>
     </div>
   );
