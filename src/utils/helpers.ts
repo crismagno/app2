@@ -9,3 +9,5 @@ export function generateColor(opacity = 1) {
 export function generateRandom() {
   return String(Date.now() + Math.floor(Math.random() * 100000000000 + 10));
 }
+
+export const sleep = (time: number = 0): Promise<any> => new Promise((resolve: any) => setTimeout(() => resolve(), time * 1000));

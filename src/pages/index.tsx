@@ -2,13 +2,15 @@ import router from "next/router";
 import { useState } from "react";
 import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
+import { TTypeChat } from "../utils/interfaces";
 import { IWormBoxProps, WormBox } from "./../components/WormBox";
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("");
   const [room, setRoom] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
-  const [type, setType] = useState<"chat" | "video">("chat");
+  const [type, setType] = useState<TTypeChat>("chat");
+  const [load, setLoad] = useState<boolean>(false);
   const [wormState, setWormState] = useState<IWormState>({
     colorChoose: "white",
     show: false,
@@ -35,7 +37,8 @@ export default function Login() {
     }, duration);
   };
 
-  const goToChatRoom = (): void => {
+  const goToChatRoom = async (): Promise<any> => {
+    setLoad(true);
     if (!userName?.trim()) {
       return wormBoxAction("Name User?", "danger", 2000);
     }
@@ -49,6 +52,7 @@ export default function Login() {
     if (type == "video") {
       // router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
     }
+    setLoad(false);
   };
 
   const onKeyPress = (event: any): void => {
@@ -144,7 +148,13 @@ export default function Login() {
               className="btn btn-primary shadow-none h-100px-4"
               onClick={goToChatRoom}
             >
-              Go to room <i className={"fa fa-running"}></i>
+              {!load ? (
+                <>
+                  Go to room <i className={"fa fa-running"}></i>
+                </>
+              ) : (
+                <i className="spinner-border spinner-border-sm" role="status" />
+              )}
             </button>
           </div>
         </div>

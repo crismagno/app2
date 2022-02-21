@@ -15,7 +15,7 @@ export const ChatButtonsTopDown: React.FC<IChatButtonsTopDownProps> = ({
   return (
     <div className={`view-buttons-arrows`}>
       {positionScroll?.clientHeight < positionScroll?.scrollHeight &&
-        positionScroll?.scrollTop !== 0 && (
+        positionScroll?.scrollTop !== 0 &&  (
           <button
             onClick={scrollToTop}
             className={"btn btn-primary btn-top shadow-sm mb-1"}

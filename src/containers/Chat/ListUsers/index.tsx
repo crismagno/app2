@@ -9,9 +9,7 @@ interface IListUsersProps {
 export const ListUsers: React.FC<IListUsersProps> = ({
   usersRoom,
 }): JSX.Element => {
-  const [toggleClasses, setToggleClasses] = useState(false);
-
-  // const styleHide = `sm:fixed top-0 left-0 d-flex d-sm-flex z-40`;
+  const [toggleClasses, setToggleClasses] = useState(true);
 
   return (
     <>

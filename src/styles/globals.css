@@ -123,8 +123,8 @@ a {
 
 .view-buttons-arrows {
   position: absolute;
-  right: 20px;
-  margin-top: 400px;
+  right: 1rem;
+  bottom: 5rem;
 }
 
 .btn-top,
@@ -133,11 +133,11 @@ a {
   justify-content: center;
   align-items: center;
   background-color: #9da1a702;
-  width: 30px;
-  height: 30px;
+  width: 2rem;
+  height: 2rem;
   border: none;
-  border-radius: 30px;
-  font-size: 12px;
+  border-radius: 2rem;
+  font-size: 0.7rem;
 }
 
 .btn-top:hover,
