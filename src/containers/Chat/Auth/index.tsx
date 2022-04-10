@@ -3,7 +3,7 @@ import { memo } from "react";
 import RedirectLogin from "../RedirectLogin";
 
 interface IChatAuthProps {
-  children?: JSX.Element[];
+  children: JSX.Element;
 }
 
 export const ChatAuth: React.FC<IChatAuthProps> = ({
