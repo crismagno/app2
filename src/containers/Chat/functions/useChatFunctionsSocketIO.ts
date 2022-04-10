@@ -88,7 +88,6 @@ export const useChatFunctionsSocketIO = () => {
 
     socket?.on(`onNewMessage-${room}`, (data: IMessage) => {
       addChatMessages(data);
-      scrollToDown();
     });
 
     socket?.on(`onRemoveMessage-${room}`, (data: IMessage) => {

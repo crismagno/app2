@@ -1,0 +1,1 @@
+export type TTypeChat = "chat" | "video"; 
