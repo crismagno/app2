@@ -2,14 +2,14 @@ import router from "next/router";
 import { useState } from "react";
 import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
-import { TTypeChat } from "../utils/interfaces";
+import { ETypeChat, ETypeChatLabels, TTypeChat } from "../utils/interfaces";
 import { IWormBoxProps, WormBox } from "./../components/WormBox";
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("");
   const [room, setRoom] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
-  const [type, setType] = useState<TTypeChat>("chat");
+  const [type, setType] = useState<ETypeChat>(ETypeChat.CHAT);
   const [load, setLoad] = useState<boolean>(false);
   const [wormState, setWormState] = useState<IWormState>({
     colorChoose: "white",
@@ -37,22 +37,27 @@ export default function Login() {
     }, duration);
   };
 
-  const goToChatRoom = async (): Promise<any> => {
-    setLoad(true);
-    if (!userName?.trim()) {
-      return wormBoxAction("Name User?", "danger", 2000);
-    }
-    if (!room.trim()) {
-      return wormBoxAction("Name Room?", "danger", 2000);
-    }
+  const goToChatRoom = async (): Promise<void | never> => {
+    try {
+      setLoad(true);
+      if (!userName.trim()) {
+        throw new Error("Name User?");
+      }
+      if (!room.trim()) {
+        throw new Error("Name Room?");
+      }
 
-    if (type == "chat") {
-      router.push(`/chat/${room}?userName=${userName}&userAvatar=${avatar}`);
-    }
-    if (type == "video") {
+      if (type === ETypeChat.CHAT) {
+        router.push(`/chat/${room}?userName=${userName}&userAvatar=${avatar}`);
+      }
+      // if (type == "video") {
       // router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
+      // }
+    } catch (error: any) {
+      wormBoxAction(error.message, "danger", 2000);
+    } finally {
+      setLoad(false);
     }
-    setLoad(false);
   };
 
   const onKeyPress = (event: any): void => {
@@ -88,33 +93,27 @@ export default function Login() {
             <Avatar src={avatar} size={150} />
           </div>
           <div className={"d-flex"}>
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                type="radio"
-                id="gridRadios1"
-                value="chat"
-                checked={type == "chat"}
-                onChange={() => setType("chat")}
-              />
-              <label className="form-check-label" htmlFor="gridRadios1">
-                Chat
-              </label>
-            </div>
-            <div className="htmlForm-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                id="gridRadios2"
-                value="video"
-                checked={type == "video"}
-                onChange={() => setType("video")}
-                disabled
-              />
-              <label className="form-check-label" htmlFor="gridRadios2">
-                <span className={"mx-2"}>Video</span>
-              </label>
-            </div>
+            {Object.keys(ETypeChat).map(
+              (eTypeChat: ETypeChat, index: number): JSX.Element => (
+                <div key={`${index}-${eTypeChat}`} className="form-check mx-2">
+                  <input
+                    disabled={eTypeChat === ETypeChat.VIDEO}
+                    className="form-check-input"
+                    type="radio"
+                    id={`for-${eTypeChat}`}
+                    value="chat"
+                    checked={type === eTypeChat}
+                    onChange={() => setType(eTypeChat)}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor={`for-${eTypeChat}`}
+                  >
+                    {ETypeChatLabels[eTypeChat]}
+                  </label>
+                </div>
+              )
+            )}
           </div>
           <div className="form-group mt-3">
             <input
@@ -145,6 +144,7 @@ export default function Login() {
           </div>
           <div className={"d-flex flex-column mt-2"}>
             <button
+              disabled={load}
               className="btn btn-primary shadow-none h-100px-4"
               onClick={goToChatRoom}
             >
