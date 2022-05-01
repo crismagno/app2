@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { generateColor, generateRandom } from "../../../utils/helpers";
 import { IMessage } from "../RenderMessages";
-import { IWormBoxProps } from "../../../components/WormBox";
+import { EColorChoose, IWormBoxProps } from "../../../components/WormBox";
 import { IUserRoom, IWormState } from "./types";
 import { Socket } from "socket.io-client";
 import { IChatScrollPosition } from "../types";
@@ -15,7 +15,7 @@ export const useChatFunctionsSocketIO = () => {
   const router: NextRouter = useRouter();
 
   const [wormState, setWormState] = useState<IWormState>({
-    colorChoose: "white",
+    colorChoose: EColorChoose.white,
     show: false,
     text: "",
   });
@@ -40,7 +40,7 @@ export const useChatFunctionsSocketIO = () => {
       socketChat
         .start(querySocketChat(router))
         .then((socket) => socketOn(socket, String(router.query.id)))
-        .catch((error) => wormBoxAction(error, "danger", 2000));
+        .catch((error) => wormBoxAction(error, EColorChoose.danger, 2000));
       return () => {
         socketChat.disconnect();
       };
@@ -58,11 +58,11 @@ export const useChatFunctionsSocketIO = () => {
   // listening all socket on
   const socketOn = (socket: Socket, room: string): void => {
     socket?.on("connect", () => {
-      wormBoxAction("Connected...", "success");
+      wormBoxAction("Connected...", EColorChoose.success);
     });
 
     socket?.on("disconnect", () => {
-      wormBoxAction("Disconnected!!!", "danger");
+      wormBoxAction("Disconnected!!!", EColorChoose.danger);
     });
 
     socket?.on(`userConnected-${room}`, (data: IUserRoom) => {
@@ -114,7 +114,7 @@ export const useChatFunctionsSocketIO = () => {
       setMessage("");
       setIsVisiblePicker(false);
     } catch (error) {
-      wormBoxAction(String(error), "warning");
+      wormBoxAction(String(error), EColorChoose.warning);
     }
   };
 
@@ -127,7 +127,7 @@ export const useChatFunctionsSocketIO = () => {
       }
       socketChat.emitRemoveMessage(message);
     } catch (error) {
-      wormBoxAction(error, "warning");
+      wormBoxAction(error, EColorChoose.warning);
     }
   };
 
@@ -208,7 +208,7 @@ export const useChatFunctionsSocketIO = () => {
 
   const wormBoxAction = (
     text: string,
-    colorChoose: IWormBoxProps["colorChoose"] = "white",
+    colorChoose: EColorChoose = EColorChoose.white,
     duration: number = 1000
   ): void => {
     setWormState({
