@@ -34,8 +34,8 @@ const Avatar: React.FC<{
       ) : (
         <div
           className={`
-            d-flex justify-center items-center 
-            border rounded-full 
+            d-flex justify-center items-center
+            border rounded-full
             w-10 h-10 text-blue-600 bg-gray-200 mr-1 shadow
           `}
           style={styleAvatar}
