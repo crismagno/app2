@@ -2,8 +2,8 @@ import router from "next/router";
 import { useState } from "react";
 import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
-import { ETypeChat, ETypeChatLabels, TTypeChat } from "../utils/interfaces";
-import { IWormBoxProps, WormBox } from "./../components/WormBox";
+import { ETypeChat, ETypeChatLabels } from "../utils/interfaces";
+import { EColorChoose, WormBox } from "./../components/WormBox";
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("");
@@ -12,15 +12,15 @@ export default function Login() {
   const [type, setType] = useState<ETypeChat>(ETypeChat.CHAT);
   const [load, setLoad] = useState<boolean>(false);
   const [wormState, setWormState] = useState<IWormState>({
-    colorChoose: "white",
+    colorChoose: EColorChoose.white,
     show: false,
     text: "",
   });
 
   const wormBoxAction = (
     text: string,
-    colorChoose: IWormBoxProps["colorChoose"] = "white",
-    duration: number = 1000
+    colorChoose: EColorChoose = EColorChoose.white,
+    duration: number = 1
   ): void => {
     setWormState({
       show: true,
@@ -34,7 +34,7 @@ export default function Login() {
         show: false,
         colorChoose,
       });
-    }, duration);
+    }, duration * 1000);
   };
 
   const goToChatRoom = async (): Promise<void | never> => {
@@ -54,7 +54,7 @@ export default function Login() {
       // router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
       // }
     } catch (error: any) {
-      wormBoxAction(error.message, "danger", 2000);
+      wormBoxAction(error.message, EColorChoose.danger, 2);
     } finally {
       setLoad(false);
     }

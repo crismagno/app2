@@ -1,9 +1,9 @@
-import { IWormBoxProps } from "../../../components/WormBox";
+import { EColorChoose } from "../../../components/WormBox";
 
 export interface IWormState {
   text: string;
   show: boolean;
-  colorChoose: IWormBoxProps["colorChoose"];
+  colorChoose: EColorChoose;
 }
 export interface IUserRoom {
   userId: string;

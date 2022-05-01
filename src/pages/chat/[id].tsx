@@ -3,13 +3,12 @@ import ChatHeader from "../../containers/Chat/Header";
 import ChatContentMessages from "../../containers/Chat/ContentMessages";
 import ChatTextarea from "../../containers/Chat/Textarea";
 import ChatEmojiPicker from "../../containers/Chat/EmojiPicker";
-// import ChatRemoveMessage from "../../containers/Chat/RemoveMessage";
 import ChatButtonsTopDown from "../../containers/Chat/ButtonsTopDown";
 import ListUsers from "../../containers/Chat/ListUsers";
 import ChatRenderMessages, {
   IMessage,
 } from "../../containers/Chat/RenderMessages";
-import WormBox, { IWormBoxProps } from "../../components/WormBox";
+import WormBox, { EColorChoose, IWormBoxProps } from "../../components/WormBox";
 import { useChatFunctionsSocketIO } from "../../containers/Chat/functions/useChatFunctionsSocketIO";
 import ChatAuth from "../../containers/Chat/Auth";
 import { NextRouter, useRouter } from "next/router";
@@ -60,7 +59,7 @@ export default function Chat() {
   const router: NextRouter = useRouter();
 
   const [wormState, setWormState] = useState<IWormState>({
-    colorChoose: "white",
+    colorChoose: EColorChoose.white,
     show: false,
     text: "",
   });
@@ -85,7 +84,7 @@ export default function Chat() {
       socketChat
         .start(querySocketChat(router))
         .then((socket) => socketOn(socket, String(router.query.id)))
-        .catch((error) => wormBoxAction(error, "danger", 2000));
+        .catch((error) => wormBoxAction(error, EColorChoose.danger, 2000));
       return () => {
         socketChat.disconnect();
       };
@@ -103,11 +102,11 @@ export default function Chat() {
   // listening all socket on
   const socketOn = (socket: Socket, room: string): void => {
     socket?.on("connect", () => {
-      wormBoxAction("Connected...", "success");
+      wormBoxAction("Connected...", EColorChoose.success);
     });
 
     socket?.on("disconnect", () => {
-      wormBoxAction("Disconnected!!!", "danger");
+      wormBoxAction("Disconnected!!!", EColorChoose.danger);
     });
 
     socket?.on(`userConnected-${room}`, (data: IUserRoom) => {
@@ -159,7 +158,7 @@ export default function Chat() {
       setMessage("");
       setIsVisiblePicker(false);
     } catch (error) {
-      wormBoxAction(String(error), "warning");
+      wormBoxAction(String(error), EColorChoose.warning);
     }
   };
 
@@ -172,7 +171,7 @@ export default function Chat() {
       }
       socketChat.emitRemoveMessage(message);
     } catch (error) {
-      wormBoxAction(error, "warning");
+      wormBoxAction(error, EColorChoose.warning);
     }
   };
 
@@ -253,7 +252,7 @@ export default function Chat() {
 
   const wormBoxAction = (
     text: string,
-    colorChoose: IWormBoxProps["colorChoose"] = "white",
+    colorChoose: IWormBoxProps["colorChoose"] = EColorChoose.white,
     duration: number = 1000
   ): void => {
     setWormState({
