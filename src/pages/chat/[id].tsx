@@ -12,7 +12,7 @@ import WormBox, { EColorChoose, IWormBoxProps } from "../../components/WormBox";
 import { useChatFunctionsSocketIO } from "../../containers/Chat/functions/useChatFunctionsSocketIO";
 import ChatAuth from "../../containers/Chat/Auth";
 import { NextRouter, useRouter } from "next/router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, MutableRefObject } from "react";
 import { Socket } from "socket.io-client";
 import { IWormState, IUserRoom } from "../../containers/Chat/functions/types";
 import { IChatScrollPosition } from "../../containers/Chat/types";
@@ -23,39 +23,6 @@ import { ISocketChatQuery } from "../../utils/SocketChat.ts/types";
 const colorGenerate: string = generateColor();
 
 export default function Chat() {
-  // const {
-  //   colorGenerate,
-  //   wormState,
-  //   userId,
-  //   userName,
-  //   message,
-  //   setMessage,
-  //   messages,
-  //   setMessages,
-  //   isDragMessage,
-  //   isDragOverRemove,
-  //   isVisiblePicker,
-  //   setIsVisiblePicker,
-  //   hoverRemoveAllMessages,
-  //   setHoverRemoveAllMessages,
-  //   positionScrollChatMessages,
-  //   chatMessagesRef,
-  //   sendMessageInvoke,
-  //   scrollToDown,
-  //   scrollToTop,
-  //   onDragOverHandler,
-  //   onDragStartBubbleMessageHandler,
-  //   onDragEndBubbleMessageHandler,
-  //   onDropHandler,
-  //   onDragDropLeaveHandler,
-  //   onKeypress,
-  //   onScrollChatMessages,
-  //   pickerOnClick,
-  //   removedMessages,
-  //   removeMessageInvoke,
-  //   usersRoom,
-  // } = useChatFunctionsSocketIO();
-
   const router: NextRouter = useRouter();
 
   const [wormState, setWormState] = useState<IWormState>({
@@ -75,12 +42,12 @@ export default function Chat() {
   const [usersRoom, setUsersRoom] = useState<IUserRoom[]>([]);
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
-  const chatMessagesRef = useRef(null);
+  const chatMessagesRef: MutableRefObject<any> = useRef(null);
   const socketChat = new SocketChat();
 
   useEffect(() => {
     if (router.query.id) {
-      setUserName(String(router?.query?.userName));
+      setUserName(String(router.query.userName));
       socketChat
         .start(querySocketChat(router))
         .then((socket) => socketOn(socket, String(router.query.id)))
@@ -93,13 +60,13 @@ export default function Chat() {
 
   const querySocketChat = (router: NextRouter): Partial<ISocketChatQuery> => ({
     userId: userId,
-    username: String(router?.query?.userName),
+    username: String(router.query.userName),
     room: String(router.query.id),
-    avatar: String(router?.query?.userAvatar),
+    avatar: String(router.query.userAvatar),
     userColor: colorGenerate,
   });
 
-  // listening all socket on
+  // Listening all socket on
   const socketOn = (socket: Socket, room: string): void => {
     socket?.on("connect", () => {
       wormBoxAction("Connected...", EColorChoose.success);
@@ -140,11 +107,11 @@ export default function Chat() {
     });
   };
 
-  // send message to socket
+  // Send message to socket
   const sendMessageInvoke = async (): Promise<void> => {
     try {
       if (!message?.trim()) {
-        return wormBoxAction("Empty message!");
+        return wormBoxAction("Empty message!", EColorChoose.warning);
       }
       socketChat.emitNewMessage({
         id: generateRandom(),
@@ -162,7 +129,7 @@ export default function Chat() {
     }
   };
 
-  // send message to remove to socket
+  // Send message to remove to socket
   const removeMessageInvoke = async (message: IMessage): Promise<void> => {
     try {
       if (!message.id) {
@@ -270,10 +237,6 @@ export default function Chat() {
     }, duration);
   };
 
-  const onChangeValueTextarea = (event: any): void => {
-    setMessage(event.target.value);
-  };
-
   return (
     <ChatAuth>
       <>
@@ -293,14 +256,6 @@ export default function Chat() {
         >
           <ChatHeader />
           <div className="row col-12">
-            {/* list messages removed of user */}
-            {/* <ChatRemoveMessage
-              isDragMessage={isDragMessage}
-              isDragOverRemove={isDragOverRemove}
-              onDropHandler={onDropHandler}
-              onDragOverHandler={onDragOverHandler}
-              onDragDropLeaveHandler={onDragDropLeaveHandler}
-            /> */}
             <ListUsers usersRoom={usersRoom} />
             <div
               className="
