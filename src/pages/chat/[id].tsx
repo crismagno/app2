@@ -16,7 +16,7 @@ import { useState, useRef, useEffect, MutableRefObject } from "react";
 import { Socket } from "socket.io-client";
 import { IWormState, IUserRoom } from "../../containers/Chat/functions/types";
 import { IChatScrollPosition } from "../../containers/Chat/types";
-import { generateColor, generateRandom } from "../../utils/helpers";
+import { generateColor, generateRandom, sleep } from "../../utils/helpers";
 import { SocketChat } from "../../utils/SocketChat.ts";
 import { ISocketChatQuery } from "../../utils/SocketChat.ts/types";
 
@@ -124,6 +124,8 @@ export default function Chat() {
       });
       setMessage("");
       setIsVisiblePicker(false);
+      await sleep(0.2);
+      scrollToDown();
     } catch (error) {
       wormBoxAction(String(error), EColorChoose.warning);
     }
@@ -251,10 +253,9 @@ export default function Chat() {
         <div
           className="
             container
-            d-flex flex-column align-items-center
+            d-flex flex-column align-items-center py-5
           "
         >
-          <ChatHeader />
           <div className="row col-12">
             <ListUsers usersRoom={usersRoom} />
             <div
@@ -308,12 +309,8 @@ export default function Chat() {
                 sendMessageInvoke={sendMessageInvoke}
                 setIsVisiblePicker={() => setIsVisiblePicker(!isVisiblePicker)}
                 value={message}
-              />
-
-              {/* picker */}
-              <ChatEmojiPicker
-                isVisiblePicker={isVisiblePicker}
                 pickerOnClick={pickerOnClick}
+                isVisiblePicker={isVisiblePicker}
               />
             </div>
           </div>
