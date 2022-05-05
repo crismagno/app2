@@ -2,6 +2,9 @@ import router from "next/router";
 import { useState } from "react";
 import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
+import { ListRoomsSaved } from "../containers/Chat/ListRoomsSaved";
+import { ELocalStorageItem } from "../shared/rooms-saved/enum";
+import { IRoomSaved } from "../shared/rooms-saved/types";
 import { ETypeChat, ETypeChatLabels } from "../utils/interfaces";
 import { EColorChoose, WormBox } from "./../components/WormBox";
 
@@ -9,7 +12,7 @@ export default function Login() {
   const [userName, setUserName] = useState<string>("");
   const [room, setRoom] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
-  const [type, setType] = useState<ETypeChat>(ETypeChat.CHAT);
+  const [typeChat, setTypeChat] = useState<ETypeChat>(ETypeChat.CHAT);
   const [load, setLoad] = useState<boolean>(false);
   const [wormState, setWormState] = useState<IWormState>({
     colorChoose: EColorChoose.white,
@@ -47,10 +50,26 @@ export default function Login() {
         throw new Error("Name Room?");
       }
 
-      if (type === ETypeChat.CHAT) {
+      const createRoomSaved: IRoomSaved = {
+        room,
+        userName,
+        avatar,
+        typeChat,
+        createdAt: new Date(),
+      };
+
+      const roomsSaved: IRoomSaved[] =
+        JSON.parse(localStorage.getItem(ELocalStorageItem.ROOMS_SAVED)) || [];
+      roomsSaved.push(createRoomSaved);
+      localStorage.setItem(
+        ELocalStorageItem.ROOMS_SAVED,
+        JSON.stringify(roomsSaved)
+      );
+
+      if (typeChat === ETypeChat.CHAT) {
         router.push(`/chat/${room}?userName=${userName}&userAvatar=${avatar}`);
       }
-      // if (type == "video") {
+      // if (typeChat == "video") {
       // router.push(`/video/${room}?userName=${userName}&userAvatar=${avatar}`);
       // }
     } catch (error: any) {
@@ -77,7 +96,7 @@ export default function Login() {
         animationIn="slideInDown"
         animationOut="slideOutUp"
       />
-
+      <ListRoomsSaved />
       <div
         className={`container d-flex flex-column justify-center align-items-center p-5`}
       >
@@ -102,8 +121,8 @@ export default function Login() {
                     type="radio"
                     id={`for-${eTypeChat}`}
                     value="chat"
-                    checked={type === eTypeChat}
-                    onChange={() => setType(eTypeChat)}
+                    checked={typeChat === eTypeChat}
+                    onChange={() => setTypeChat(eTypeChat)}
                   />
                   <label
                     className="form-check-label"
@@ -145,7 +164,7 @@ export default function Login() {
           <div className={"d-flex flex-column mt-2"}>
             <button
               disabled={load}
-              className="btn btn-primary shadow-none h-100px-4"
+              className="btn bg-gradient-to-tr from-blue-500 to-blue-800 text-white shadow-none h-100px-4"
               onClick={goToChatRoom}
             >
               {!load ? (

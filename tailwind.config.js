@@ -6,7 +6,6 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class", // or 'media' or 'class'
-
   theme: {
     fontFamily: {
       sans: ["Graphik", "sans-serif"],
