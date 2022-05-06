@@ -34,7 +34,7 @@ export const ListRoomsSaved: React.FC = (): JSX.Element => {
       <div
         className={`
         d-md-flex flex-column p-3
-        col-lg-4 col-md-4 col-8
+        col-lg-3 col-md-3 col-8
         absolute
         ${toggleClasses ? "-left-full" : "left-0"}
         z-10
