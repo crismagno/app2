@@ -47,8 +47,8 @@ export default function Chat() {
       setUserName(String(router.query.userName));
       socketChat
         .start(querySocketChat(router))
-        .then((socket) => socketOn(socket, String(router.query.id)))
-        .catch((error) => wormBoxAction(error, EColorChoose.danger, 2000));
+        .then((socket: Socket) => socketOn(socket, String(router.query.id)))
+        .catch((error: any) => wormBoxAction(error, EColorChoose.danger, 2000));
       return () => {
         socketChat.disconnect();
       };
@@ -129,12 +129,8 @@ export default function Chat() {
   };
 
   // Send message to remove to socket
-  const removeMessageInvoke = async (message: IMessage): Promise<void> => {
+  const removeMessageInvoke = (message: IMessage): void => {
     try {
-      if (!message.id) {
-        wormBoxAction("Empty message!");
-        return;
-      }
       socketChat.emitRemoveMessage(message);
     } catch (error) {
       wormBoxAction(error, EColorChoose.warning);
@@ -262,7 +258,6 @@ export default function Chat() {
             "
               style={{ height: "87vh", position: "relative" }}
             >
-              {/* top chat */}
               <ChatTop
                 userName={userName}
                 userId={userId}
@@ -274,7 +269,6 @@ export default function Chat() {
                 colorUserName={colorGenerate}
               />
 
-              {/*  div messages */}
               <ChatContentMessages
                 onScrollChatMessages={onScrollChatMessages}
                 chatMessagesRef={chatMessagesRef}
@@ -292,14 +286,12 @@ export default function Chat() {
                 />
               </ChatContentMessages>
 
-              {/* buttons top down */}
               <ChatButtonsTopDown
                 positionScroll={positionScrollChatMessages}
                 scrollToTop={scrollToTop}
                 scrollToDown={scrollToDown}
               />
 
-              {/* div textarea */}
               <ChatTextarea
                 onChange={(event) => setMessage(event.target.value)}
                 onKeypress={onKeypress}

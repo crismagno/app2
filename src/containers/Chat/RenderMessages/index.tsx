@@ -8,7 +8,7 @@ export interface IRenderMessagesProps {
   onDragStartBubbleMessageHandler: (event, messageElement) => void;
   onDragEndBubbleMessageHandler: (event) => void;
   setMessage: (string) => void;
-  removeMessage: (message: IMessage) => Promise<void>;
+  removeMessage: (message: IMessage) => void;
 }
 
 export interface IMessage {
@@ -165,7 +165,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 message-bubble
                 d-flex flex-column
                 cursor-pointer
-                mb-1 rounded-1 py-1 px-2 
+                mb-1 rounded-1 py-1 px-2
                 shadow
                 ${messageElement.userId === userId ? colorSend : colorReceive}
               `}
