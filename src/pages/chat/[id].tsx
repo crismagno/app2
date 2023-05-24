@@ -23,39 +23,6 @@ import { ISocketChatQuery } from "../../utils/SocketChat.ts/types";
 const colorGenerate: string = generateColor();
 
 export default function Chat() {
-  // const {
-  //   colorGenerate,
-  //   wormState,
-  //   userId,
-  //   userName,
-  //   message,
-  //   setMessage,
-  //   messages,
-  //   setMessages,
-  //   isDragMessage,
-  //   isDragOverRemove,
-  //   isVisiblePicker,
-  //   setIsVisiblePicker,
-  //   hoverRemoveAllMessages,
-  //   setHoverRemoveAllMessages,
-  //   positionScrollChatMessages,
-  //   chatMessagesRef,
-  //   sendMessageInvoke,
-  //   scrollToDown,
-  //   scrollToTop,
-  //   onDragOverHandler,
-  //   onDragStartBubbleMessageHandler,
-  //   onDragEndBubbleMessageHandler,
-  //   onDropHandler,
-  //   onDragDropLeaveHandler,
-  //   onKeypress,
-  //   onScrollChatMessages,
-  //   pickerOnClick,
-  //   removedMessages,
-  //   removeMessageInvoke,
-  //   usersRoom,
-  // } = useChatFunctionsSocketIO();
-
   const router: NextRouter = useRouter();
 
   const [wormState, setWormState] = useState<IWormState>({
@@ -63,28 +30,43 @@ export default function Chat() {
     show: false,
     text: "",
   });
+
   const [userId, setUserId] = useState<string>(`social_${generateRandom()}`);
+
   const [userName, setUserName] = useState<string>("");
+
   const [message, setMessage] = useState<string>("");
+
   const [messages, setMessages] = useState<IMessage[]>([]);
+
   const [removedMessages, setRemovedMessages] = useState<IMessage[]>([]);
+
   const [isDragMessage, setIsDragMessage] = useState(false);
+
   const [isDragOverRemove, setIsDragOverRemove] = useState(false);
+
   const [isVisiblePicker, setIsVisiblePicker] = useState(false);
+
   const [hoverRemoveAllMessages, setHoverRemoveAllMessages] = useState(false);
+
   const [usersRoom, setUsersRoom] = useState<IUserRoom[]>([]);
+
   const [positionScrollChatMessages, setPositionScrollChatMessages] =
     useState<IChatScrollPosition>(null);
+
   const chatMessagesRef = useRef(null);
+
   const socketChat = new SocketChat();
 
   useEffect(() => {
-    if (router.query.id) {
-      setUserName(String(router?.query?.userName));
+    if (router.query.id && router.query.userName) {
+      setUserName(String(router.query.userName));
+
       socketChat
         .start(querySocketChat(router))
-        .then((socket) => socketOn(socket, String(router.query.id)))
+        .then((socket) => socketOn(socket, router.query.id.toString()))
         .catch((error) => wormBoxAction(error, EColorChoose.danger, 2000));
+
       return () => {
         socketChat.disconnect();
       };
@@ -93,9 +75,9 @@ export default function Chat() {
 
   const querySocketChat = (router: NextRouter): Partial<ISocketChatQuery> => ({
     userId: userId,
-    username: String(router?.query?.userName),
+    username: String(router.query?.userName),
     room: String(router.query.id),
-    avatar: String(router?.query?.userAvatar),
+    avatar: String(router.query?.userAvatar),
     userColor: colorGenerate,
   });
 
@@ -105,7 +87,7 @@ export default function Chat() {
       wormBoxAction("Connected...", EColorChoose.success);
     });
 
-    socket?.on("disconnect", () => {
+    socket?.on("disconnect", (e) => {
       wormBoxAction("Disconnected!!!", EColorChoose.danger);
     });
 
@@ -146,6 +128,7 @@ export default function Chat() {
       if (!message?.trim()) {
         return wormBoxAction("Empty message!");
       }
+
       socketChat.emitNewMessage({
         id: generateRandom(),
         userName,
@@ -155,6 +138,7 @@ export default function Chat() {
         createdAt: new Date().toISOString(),
         colorGenerate,
       });
+
       setMessage("");
       setIsVisiblePicker(false);
     } catch (error) {
