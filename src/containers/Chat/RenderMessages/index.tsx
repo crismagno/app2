@@ -1,5 +1,6 @@
 import { memo, useState } from "react";
 import { Animated } from "react-animated-css";
+import styles from "./render-messages.module.scss";
 
 export interface IRenderMessagesProps {
   messages: any;
@@ -20,12 +21,6 @@ export interface IMessage {
   createdAt: Date | string;
   colorGenerate: string;
 }
-
-const colorSend = `bg-gradient-to-tr from-blue-600 to-blue-800
-hover:bg-gradient-to-tr hover:from-blue-800 hover:to-blue-900`;
-
-const colorReceive = `bg-gradient-to-tr from-gray-500 to-gray-600
-hover:bg-gradient-to-tr hover:from-gray-600 hover:to-gray-700`;
 
 export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
   messages,
@@ -104,7 +99,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
         <div
           key={`message-element-${index}`}
           className={`flex ${
-            messageElement.userId === userId ? "flex-row" : "flex-row-reverse"
+            messageElement.userId === userId ? "flex-row-reverse" : "flex-row"
           } justify-between items-center`}
         >
           {/* show trash component */}
@@ -113,7 +108,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
               messageElement.id === _messageToShowTrash.id
           ) > -1 && (
             <button
-              className="btn btn-outline-danger btn-sm inline-block"
+              className="btn btn-outline-danger btn-sm inline-block mx-2"
               onClick={() => removeMessage(messageElement)}
             >
               <i className="far fa-trash-alt" />
@@ -167,9 +162,9 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 cursor-pointer
                 mb-1 rounded-1 py-1 px-2
                 shadow
-                ${messageElement.userId === userId ? colorSend : colorReceive}
-              `}
-              style={{ maxWidth: "80%", minWidth: "7rem" }}
+                ${messageElement.userId === userId ? styles.bubbleRight: styles.bubbleLeft}
+                `}
+              style={{ maxWidth: "80%", minWidth: "8rem" }}
             >
               <div className={""}>{messageElement.message}</div>
               <span style={{ fontSize: 9 }} className={""}>

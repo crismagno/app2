@@ -19,14 +19,16 @@ export const ChatContentMessages: React.FC<IChatContentMessagesProps> = ({
       onMouseLeave={onMouseLeave}
       ref={chatMessagesRef}
       id="chat-messages"
+
       className="
         flex-1
-        d-flex flex-column 
+        d-flex flex-column
+        flex-grow
         border-bottom border-top
         my-2 pt-2 pb-1 px-2
         bg-gradient-to-tr from-gray-800 to-gray-900
       "
-      style={{ height: "450px", overflowX: "hidden" }}
+      style={{ height: "450px", overflowX: "hidden" , flexGrow: 1}}
     >
       {children}
     </div>

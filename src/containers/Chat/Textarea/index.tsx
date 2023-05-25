@@ -32,9 +32,9 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
           placeholder={`Message...`}
         />
         <button
+        disabled
           className={`absolute
-          btn bg-gradient-to-tr from-gray-500 to-gray-600
-          hover:bg-gradient-to-tr hover:from-gray-600 hover:to-yellow-400
+          btn btn-warning
           text-white mt-1
           shadow-none h-100 mb-1 ml-1 px-4 mx-1 rounded-full
         `}
@@ -44,20 +44,17 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
           <i className="far fa-smile" />
         </button>
         <button
-          className={`
-          btn bg-gradient-to-tr from-blue-500 to-blue-600
-          hover:bg-gradient-to-tr hover:from-blue-600 hover:to-blue-700
-        text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4 rounded-full
+          className={`btn btn-primary text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4 rounded-full
         `}
           onClick={sendMessageInvoke}
         >
           <i className="far fa-paper-plane" />
         </button>
       </div>
-      <ChatEmojiPicker
+      {/* <ChatEmojiPicker
         isVisiblePicker={isVisiblePicker}
         pickerOnClick={pickerOnClick}
-      />
+      /> */}
     </>
   );
 };

@@ -6,13 +6,14 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class", // or 'media' or 'class'
-
+  content: ["./src/**/*.{js,ts,jsx,tsx}",
+  "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
       gray: colors.gray,
       blue: colors.blue,
       red: colors.rose,
-      pink: colors.fuchsia,
+      pink: colors.pink,
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],

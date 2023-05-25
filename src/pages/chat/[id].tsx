@@ -243,6 +243,16 @@ export default function Chat() {
           animationIn="slideInDown"
           animationOut="slideOutUp"
         />
+
+        <div className="flex p-2">
+          <button
+            className="btn btn-secondary"
+            onClick={() => router.back()}
+          >
+            Back
+          </button>
+        </div>
+
         <div
           className="
             container
@@ -251,6 +261,7 @@ export default function Chat() {
         >
           <div className="row col-12">
             <ListUsers usersRoom={usersRoom} />
+
             <div
               className="
               d-flex flex-column justify-content-center
@@ -269,6 +280,7 @@ export default function Chat() {
                 colorUserName={colorGenerate}
               />
 
+            <div className="flex position-relative">
               <ChatContentMessages
                 onScrollChatMessages={onScrollChatMessages}
                 chatMessagesRef={chatMessagesRef}
@@ -291,6 +303,7 @@ export default function Chat() {
                 scrollToTop={scrollToTop}
                 scrollToDown={scrollToDown}
               />
+            </div>
 
               <ChatTextarea
                 onChange={(event) => setMessage(event.target.value)}
