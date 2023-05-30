@@ -2,7 +2,7 @@ import router from "next/router";
 import { useState } from "react";
 import Avatar from "../components/Avatar";
 import { IWormState } from "../containers/Chat/functions/types";
-import { ListRoomsSaved } from "../containers/Chat/ListRoomsSaved";
+import ListRoomsSaved from "../containers/Chat/ListRoomsSaved";
 import { ELocalStorageItem } from "../shared/rooms-saved/enum";
 import { IRoomSaved } from "../shared/rooms-saved/types";
 import { ETypeChat, ETypeChatLabels } from "../utils/interfaces";
@@ -10,10 +10,15 @@ import { EColorChoose, WormBox } from "./../components/WormBox";
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("");
+
   const [room, setRoom] = useState<string>("");
+
   const [avatar, setAvatar] = useState<string>("");
+
   const [typeChat, setTypeChat] = useState<ETypeChat>(ETypeChat.CHAT);
+
   const [load, setLoad] = useState<boolean>(false);
+
   const [wormState, setWormState] = useState<IWormState>({
     colorChoose: EColorChoose.white,
     show: false,
@@ -60,7 +65,9 @@ export default function Login() {
 
       const roomsSaved: IRoomSaved[] =
         JSON.parse(localStorage.getItem(ELocalStorageItem.ROOMS_SAVED)) || [];
+
       roomsSaved.push(createRoomSaved);
+
       localStorage.setItem(
         ELocalStorageItem.ROOMS_SAVED,
         JSON.stringify(roomsSaved)
@@ -96,7 +103,9 @@ export default function Login() {
         animationIn="slideInDown"
         animationOut="slideOutUp"
       />
+
       <ListRoomsSaved />
+
       <div
         className={`container d-flex flex-column justify-center align-items-center p-5`}
       >
@@ -111,6 +120,7 @@ export default function Login() {
           <div className={`d-flex justify-content-center mb-3`}>
             <Avatar src={avatar} size={150} />
           </div>
+
           <div className={"d-flex"}>
             {Object.keys(ETypeChat).map(
               (eTypeChat: ETypeChat, index: number): JSX.Element => (
@@ -124,6 +134,7 @@ export default function Login() {
                     checked={typeChat === eTypeChat}
                     onChange={() => setTypeChat(eTypeChat)}
                   />
+
                   <label
                     className="form-check-label"
                     htmlFor={`for-${eTypeChat}`}
@@ -134,6 +145,7 @@ export default function Login() {
               )
             )}
           </div>
+
           <div className="form-group mt-3">
             <input
               type="text"
@@ -142,6 +154,7 @@ export default function Login() {
               onChange={(event) => setAvatar(event.target.value)}
             />
           </div>
+
           <div className="form-group mt-2">
             <input
               type="text"
@@ -152,6 +165,7 @@ export default function Login() {
               maxLength={30}
             />
           </div>
+
           <div className="form-group mt-2">
             <input
               type="text"
@@ -161,6 +175,7 @@ export default function Login() {
               onKeyPress={onKeyPress}
             />
           </div>
+
           <div className={"d-flex flex-column mt-2"}>
             <button
               disabled={load}

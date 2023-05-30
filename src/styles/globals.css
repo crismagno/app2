@@ -219,3 +219,94 @@ a {
     display: flex;
   }
 }
+
+
+/* Override classes */
+
+.-left-3 {
+  left: -0.75rem/* -12px */;
+}
+
+.p-3 {
+  padding: 0.75rem/* 12px */;
+}
+
+.-left-full {
+  left: -100%;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.h-full {
+  height: 100%;
+}
+
+@media (min-width: 640px) {
+  .sm\:absolute {
+      position: absolute;
+  }
+
+  .sm\:top-3 {
+    top: 0.75rem/* 12px */;
+  }
+
+  .sm\:absolute {
+    position: absolute;
+  }
+
+  .sm\:-left-full {
+    left: -100%;
+  }
+
+  .sm\:left-0 {
+    left: 0px;
+  }
+
+  .sm\:-top-0 {
+    top: -0px;
+  }
+
+  .sm\:transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .sm\:ease-in-out {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sm\:duration-500 {
+    transition-duration: 500ms;
+  }
+
+  .sm\:top-14 {
+    top: 3.5rem/* 56px */;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:relative {
+      position: relative;
+  }
+
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:-left-0 {
+      left: -0px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:-left-0 {
+      left: -0px;
+  }
+}

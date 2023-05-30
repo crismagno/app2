@@ -13,7 +13,7 @@ export const ListUsers: React.FC<IListUsersProps> = ({
 
   return (
     <>
-      <div className="d-sm-flex d-md-none sm:absolute absolute -left-3 z-10 sm:top-3">
+      <div className="d-sm-flex d-md-none sm:absolute absolute -left-3 z-10 sm:top-14">
         <button
           className="btn btn-sm
             bg-gradient-to-tr from-blue-500 to-blue-600

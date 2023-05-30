@@ -31,15 +31,15 @@ export const WormBox: React.FC<IWormBoxProps> = ({
   const styleChoose = () => {
     switch (colorChoose) {
       case EColorChoose.white:
-        return "bg-gradient-to-tr from-white to-gray-50 text-gray-800";
+        return "bg-white text-dark";
       case EColorChoose.warning:
-        return "bg-gradient-to-tr from-yellow-400 to-yellow-500 text-white";
+        return "bg-warning text-white";
       case EColorChoose.danger:
-        return "bg-gradient-to-tr from-red-400 to-red-500 text-white";
+        return "bg-danger text-white";
       case EColorChoose.success:
-        return "bg-gradient-to-tr from-green-500 to-green-700 text-white";
+        return "bg-success text-white";
       case EColorChoose.dark:
-        return "bg-gradient-to-tr from-gray-800 to-gray-900 text-white";
+        return "bg-dark text-white";
     }
   };
 

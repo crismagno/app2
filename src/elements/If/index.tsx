@@ -5,9 +5,9 @@ interface IIfProps {
   children: JSX.Element;
 }
 
-export const If: React.FC<IIfProps> = ({
+export const If: React.FC<IIfProps> = memo(({
   condition,
   children,
-}): JSX.Element | null => (condition ? children : null);
+}): JSX.Element | null => (condition ? children : null));
 
-export default memo(If);
+export default If;

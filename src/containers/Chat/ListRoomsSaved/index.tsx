@@ -6,7 +6,7 @@ import { IRoomSaved } from "../../../shared/rooms-saved/types";
 import { ETypeChatLabels } from "../../../utils/interfaces";
 import { IUserRoom } from "../functions/types";
 
-export const ListRoomsSaved: React.FC = (): JSX.Element => {
+const ListRoomsSaved: React.FC = (): JSX.Element => {
   const [toggleClasses, setToggleClasses] = useState<boolean>(true);
   const [listRoomsSaved, setListRoomsSaved] = useState<IRoomSaved[]>([]);
 
@@ -19,7 +19,7 @@ export const ListRoomsSaved: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <div className="d-sm-flex absolute -left-0 z-10 sm:top-3">
+      <div className="d-flex position-absolute -left-0 z-10 top-3">
         <button
           className="btn btn-sm
             bg-gradient-to-tr from-blue-500 to-blue-800 text-white
@@ -31,22 +31,23 @@ export const ListRoomsSaved: React.FC = (): JSX.Element => {
           <i className="fa fa-list" />
         </button>
       </div>
+
       <div
         className={`
-        d-md-flex flex-column p-3
+        d-flex flex-column p-3
         col-lg-3 col-md-3 col-8
-        absolute
-        ${toggleClasses ? "-left-full" : "left-0"}
+        position-absolute
         z-10
         bg-gradient-to-tr from-gray-800 to-gray-900
-        h-full
         -top-0 transition-all ease-in-out duration-500 shadow-2xl
       `}
+      style={{left: toggleClasses ? '-100%' : 0, height: '100%'}}
       >
         <div className="flex justify-between">
           <span>Rooms Saved: {listRoomsSaved.length}</span>
           <button
-            className="btn btn-secondary btn-sm d-sm-flex"
+            className="btn btn-secondary btn-sm d-flex"
+            style={{marginLeft: '1rem'}}
             onClick={() => setToggleClasses(!toggleClasses)}
           >
             <i className="fa fa-list" />
@@ -57,14 +58,12 @@ export const ListRoomsSaved: React.FC = (): JSX.Element => {
             return (
               <div
                 key={`rooms-saved-${index}`}
-                className={`
-              border-bottom rounded-sm shadow
-              d-flex items-center p-1 pb-2 mt-2
+                className={`border-bottom rounded-sm shadow d-flex items-center p-1 pb-2 mt-2
             `}
               >
                 <Avatar src={roomSaved.avatar} size={40} />
-                <div className="d-flex flex-row w-full justify-between p-1">
-                  <div className="flex flex-col ">
+                <div className="d-flex flex-row justify-between p-1 w-100">
+                  <div className="flex flex-col" style={{marginLeft: '.8rem'}}>
                     <span
                       className={`text-sm`}
                       title={`User name: ${roomSaved.userName}`}
@@ -83,7 +82,8 @@ export const ListRoomsSaved: React.FC = (): JSX.Element => {
                   </div>
 
                   <button
-                    className="btn btn-sm bg-gradient-to-tr from-blue-500 to-blue-800 text-white rounded-2xl w-8 h-8"
+                    className="btn btn-sm bg-gradient-to-tr from-blue-500 to-blue-800 text-white rounded-2xl"
+                    style={{height: '2rem', width: '2rem', marginLeft: '1rem'}}
                     onClick={() => {
                       router.push(
                         `/chat/${roomSaved.room}?userName=${roomSaved.userName}&userAvatar=${roomSaved.avatar}`
