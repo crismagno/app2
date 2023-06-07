@@ -13,18 +13,15 @@ export const ListUsers: React.FC<IListUsersProps> = ({
 
   return (
     <>
-      <div className="d-sm-flex d-md-none sm:absolute absolute -left-3 z-10 sm:top-14">
+      <div className="d-sm-flex d-md-none sm:absolute -left-3 z-10 sm:top-14">
         <button
-          className="btn btn-sm
-            bg-gradient-to-tr from-blue-500 to-blue-600
-            hover:bg-gradient-to-tr
-            hover:from-blue-600 hover:to-blue-700 text-white
-            opacity-30 hover:opacity-100 py-0"
+          className="btn btn-sm btn-primary"
           onClick={() => setToggleClasses(!toggleClasses)}
         >
           <i className="fa fa-users" />
         </button>
       </div>
+
       <div
         className={`
         d-md-flex flex-column p-3
@@ -38,6 +35,7 @@ export const ListUsers: React.FC<IListUsersProps> = ({
         shadow-lg
         h-full
         sm:-top-0 sm:transition-all sm:ease-in-out sm:duration-500 sm:shadow-2xl
+        bg-app2-default
       `}
       >
         <div className="flex justify-between">

@@ -25,26 +25,28 @@ export const ChatTextarea: React.FC<ChatTextareaProps> = ({
       <div className={"relative d-flex flex-row align-items-center"}>
         <textarea
           onKeyPress={onKeypress}
-          className="shadow-none form-control rounded-full pl-4 pr-16 py-2 mr-2"
+          className="shadow-none form-control pl-4 pr-16 py-2 mr-2"
           onChange={onChange}
           value={value}
           style={{ resize: "none" }}
           placeholder={`Message...`}
         />
         <button
-        disabled
-          className={`absolute
+          disabled
+          className={`
+          absolute
           btn btn-warning
           text-white mt-1
           shadow-none h-100 mb-1 ml-1 px-4 mx-1 rounded-full
         `}
           onClick={setIsVisiblePicker}
-          style={{ right: "4.3rem" }}
+          style={{ right: "4.3rem" , display: 'none'}}
         >
           <i className="far fa-smile" />
         </button>
         <button
-          className={`btn btn-primary text-white mt-1 shadow-none h-100 mb-1 ml-0 px-4 rounded-full
+        disabled={!value}
+          className={`btn btn-primary text-white mt-1 shadow-none h-100 mb-1 ml-1 mx-1 px-4 rounded-full
         `}
           onClick={sendMessageInvoke}
         >

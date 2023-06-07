@@ -21,11 +21,7 @@ const ListRoomsSaved: React.FC = (): JSX.Element => {
     <>
       <div className="d-flex position-absolute -left-0 z-10 top-3">
         {toggleClasses && <button
-          className="btn btn-sm
-            bg-gradient-to-tr from-blue-500 to-blue-800 text-white
-            hover:bg-gradient-to-tr
-            hover:from-blue-400 hover:to-blue-600
-            opacity-30 hover:opacity-100 py-0"
+          className="btn btn-sm btn-primary"
           onClick={() => setToggleClasses(!toggleClasses)}
         >
           <i className="fa fa-list" />
@@ -43,7 +39,7 @@ const ListRoomsSaved: React.FC = (): JSX.Element => {
       `}
       style={{left: toggleClasses ? '-100%' : 0, height: '100%'}}
       >
-        <div className="flex justify-between">
+        <div className="d-flex justify-between">
           <span>Rooms Saved: {listRoomsSaved.length}</span>
           <button
             className="btn btn-secondary btn-sm d-flex"

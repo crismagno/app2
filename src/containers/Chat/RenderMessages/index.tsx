@@ -59,21 +59,25 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
             message.id === _messageToShowTrash.id
         ) === -1
       ) {
-        setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => [
-          ..._messagesToShowTrash,
-          message,
-        ]);
-
-        setTimeout(() => {
-          setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => {
-            return _messagesToShowTrash.filter(
-              (_messageToShowTrash) => message.id !== _messageToShowTrash.id
-            );
-          });
-        }, 5000);
+        showMessageToTrash(message);
       }
     }
   };
+
+  const showMessageToTrash = (message: IMessage) => {
+    setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => [
+      ..._messagesToShowTrash,
+      message,
+    ]);
+
+    setTimeout(() => {
+      setMessagesToShowTrash((_messagesToShowTrash: IMessage[]) => {
+        return _messagesToShowTrash.filter(
+          (_messageToShowTrash) => message.id !== _messageToShowTrash.id
+        );
+      });
+    }, 5000);
+  }
 
   if (messages.length === 0) {
     return (
@@ -99,28 +103,15 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
         <div
           key={`message-element-${index}`}
           className={`flex ${
-            messageElement.userId === userId ? "flex-row-reverse" : "flex-row"
-          } justify-between items-center`}
+            messageElement.userId !== userId ? "flex-row-reverse" : "flex-row"
+          } justify-end items-center`}
         >
-          {/* show trash component */}
-          {messagesToShowTrash.findIndex(
-            (_messageToShowTrash: IMessage) =>
-              messageElement.id === _messageToShowTrash.id
-          ) > -1 && (
-            <button
-              className="btn btn-outline-danger btn-sm inline-block mx-2"
-              onClick={() => removeMessage(messageElement)}
-            >
-              <i className="far fa-trash-alt" />
-            </button>
-          )}
-
           {/* bubble message component */}
           <Animated
             className={`
               inline-flex flex-1 flex-column
               ${
-                (messageElement.userId === userId && "align-items-end") ||
+                messageElement.userId === userId ? "align-items-end" :
                 "align-items-start"
               }`}
             animationIn={
@@ -141,6 +132,7 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 {messageElement.userName}
               </div>
             )}
+
             <div
               draggable
               onDragStart={(event) =>
@@ -151,9 +143,10 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
                 messageElement.userId === userId &&
                 onDragEndBubbleMessageHandler(event)
               }
-              onDoubleClick={() =>
-                setMessage(`${message}${messageElement.message}`)
-              }
+              onDoubleClick={() => {
+                // setMessage(`${message}${messageElement.message}`)\
+                showMessageToTrash(messageElement);
+              }}
               onMouseDown={onMouseDown}
               onMouseUp={() => onMouseUp(messageElement)}
               className={`
@@ -172,6 +165,19 @@ export const ChatRenderMessages: React.FC<IRenderMessagesProps> = ({
               </span>
             </div>
           </Animated>
+
+          {/* show trash component */}
+          {messagesToShowTrash.findIndex(
+            (_messageToShowTrash: IMessage) =>
+              messageElement.id === _messageToShowTrash.id
+          ) > -1 && (
+            <button
+              className="btn btn-outline-danger btn-sm inline-block mx-2"
+              onClick={() => removeMessage(messageElement)}
+            >
+              <i className="far fa-trash-alt" />
+            </button>
+          )}
         </div>
       );
     }

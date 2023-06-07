@@ -184,6 +184,14 @@ a {
   display: flex;
 }
 
+.d-flex {
+  display: flex !important;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .container-hide-left {
@@ -227,6 +235,10 @@ a {
 
 /* Override classes */
 
+.left-0 {
+  left: 0px;
+}
+
 .-left-3 {
   left: -0.75rem/* -12px */;
 }
@@ -249,6 +261,26 @@ a {
 
 .h-full {
   height: 100%;
+}
+
+.top-14 {
+  top: 3.5rem/* 56px */;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.rounded-4xl {
+  border-radius: 2rem/* 32px */;
+}
+
+.rounded-2xl {
+  border-radius: 1rem/* 16px */;
 }
 
 @media (min-width: 640px) {
