@@ -20,7 +20,7 @@ const ListRoomsSaved: React.FC = (): JSX.Element => {
   return (
     <>
       <div className="d-flex position-absolute -left-0 z-10 top-3">
-        <button
+        {toggleClasses && <button
           className="btn btn-sm
             bg-gradient-to-tr from-blue-500 to-blue-800 text-white
             hover:bg-gradient-to-tr
@@ -29,7 +29,7 @@ const ListRoomsSaved: React.FC = (): JSX.Element => {
           onClick={() => setToggleClasses(!toggleClasses)}
         >
           <i className="fa fa-list" />
-        </button>
+        </button>}
       </div>
 
       <div
@@ -38,8 +38,8 @@ const ListRoomsSaved: React.FC = (): JSX.Element => {
         col-lg-3 col-md-3 col-8
         position-absolute
         z-10
-        bg-gradient-to-tr from-gray-800 to-gray-900
         -top-0 transition-all ease-in-out duration-500 shadow-2xl
+        bg-app2-default
       `}
       style={{left: toggleClasses ? '-100%' : 0, height: '100%'}}
       >
